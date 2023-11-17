@@ -1,0 +1,40 @@
+/* Animation Underline */
+.a-underline {
+  position: relative;
+}
+.a-underline::after {
+  content: "";
+  display: none;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--primary-color);
+  height: 2px;
+  width: 0%;
+  animation: k-underline 0.2s linear forwards;
+}
+.a-underline:hover::after {
+  display: block;
+}
+.a-underline::before {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  background-color: var(--primary-color);
+  height: 2px;
+  width: 0%;
+  transition: width 0.2s ease-in-out;
+  transition-delay: 0.2s;
+}
+.a-underline:hover::before {
+  width: 100%;
+}
+@keyframes k-underline {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
