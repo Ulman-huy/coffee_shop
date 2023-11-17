@@ -31,12 +31,16 @@ import slider_3 from "./slider/slider1.jpg";
 import slider_4 from "./slider/slider2.jpg";
 import banner_store from "./store/slider.webp";
 import store from "./store/store.webp";
-import store1 from "./store/store1.webp";
-import store2 from "./store/store2.webp";
-import store3 from "./store/store3.webp";
-import store4 from "./store/store4.webp";
+import storeSlide1 from "./store/slider.webp";
+import storeSlide2 from "./store/slider1.webp";
+import store1 from "./store/store-0.webp";
+import store2 from "./store/store-2.webp";
+import store3 from "./store/store-3.webp";
+import store4 from "./store/store-4.webp";
 
 export {
+  storeSlide1,
+  storeSlide2,
   store,
   store1,
   store2,

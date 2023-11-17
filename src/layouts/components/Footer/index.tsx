@@ -1,27 +1,13 @@
 import { Link } from "react-router-dom";
-import paypal from "@/assets/image/pay/paypal.png";
-import amazon from "@/assets/image/pay/amazon.ico";
-import mastercard from "@/assets/image/pay/mastercard.png";
-import visa from "@/assets/image/pay/visa.webp";
-
+import { amazon, mastercard, paypal, visa } from "../../../assets/images";
 import {
   FacebookIcon,
   InstagramIcon,
   LinkedIcon,
   TwitterIcon,
-} from "@/components/Icons";
-// import {
-//   faPhone,
-//   faLocationDot,
-//   faEnvelope,
-// } from "@fortawesome/free-solid-svg-icons";
-// import {
-//   TwitterIcon,
-//   FacebookIcon,
-//   InstagramIcon,
-//   LinkedIcon,
-// } from "../../../components/Icons";
-// import { faCopyright } from "@fortawesome/free-regular-svg-icons";
+} from "../../../components/Icons";
+import { FaCopyright, FaEnvelope, FaPhone } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
 
 const pages = [
   {
@@ -57,15 +43,16 @@ const category = [
 ];
 function Footer() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-black">
       <div className="max-w-default w-full">
         <form>
           <div className="h-[180px] bg-black border-b border-grey z-[99999] rounded-t-full w-full mb-0 flex items-center justify-between p-15">
             <label
               htmlFor=""
-              className="block flex-shrink-0 text-[38px] break-words font-pacifico"
+              className="block flex-shrink-0 w-[250px] text-[38px] break-words font-pacifico text-white"
             >
-              Nhận thông tin <span className="text-yellow">mới nhất</span>
+              Nhận thông tin{" "}
+              <span className="text-yellow capitalize">mới nhất</span>
             </label>
             <div className="flex w-full">
               <input
@@ -85,7 +72,7 @@ function Footer() {
         </form>
         <div className="flex justify-between w-full mt-6">
           <div className="pages">
-            <h2>Trang</h2>
+            <h2 className="font-medium">Trang</h2>
             <ul>
               {pages.map((page, index) => (
                 <li
@@ -103,7 +90,7 @@ function Footer() {
             </ul>
           </div>
           <div className="category">
-            <h2>Danh mục</h2>
+            <h2 className="font-medium">Danh mục</h2>
             <ul>
               {category.map((item, index) => (
                 <li
@@ -121,21 +108,21 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h2>Liên hệ</h2>
+            <h2 className="font-medium">Liên hệ</h2>
             <ul>
-              <li className="p-2 text-grey text-[14px] font-semibold">
-                {/* <FontAwesomeIcon icon={faPhone} /> */}
+              <li className="p-2 text-grey text-[14px] font-semibold flex items-center gap-2">
+                <FaPhone />
                 <span>+84 961 144 245</span>
               </li>
-              <li className="p-2 text-grey text-[14px] font-semibold">
-                {/* <FontAwesomeIcon icon={faEnvelope} /> */}
+              <li className="p-2 text-grey text-[14px] font-semibold flex items-center gap-2">
+                <FaEnvelope />
                 <span>aniflex.qi@gmail.com</span>
               </li>
-              <li className="p-2 text-grey text-[14px] font-semibold">
-                {/* <FontAwesomeIcon icon={faLocationDot} /> */}
+              <li className="p-2 text-grey text-[14px] font-semibold flex items-center gap-2">
+                <FaLocationDot />
                 <span>Hoàng Mai, Hà Nội</span>
               </li>
-              <li className="p-2 text-grey text-[14px] font-semibold">
+              <li className="p-2 text-grey text-[14px] font-semibold flex items-center gap-2">
                 <div className="flex gap-4">
                   <a
                     className="w-5 h-5 text-grey hover:text-primary transition-colors"
@@ -166,30 +153,30 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h2>Thanh toán</h2>
+            <h2 className="font-medium">Thanh toán</h2>
             <ul className="flex flex-wrap w-1/2">
-              <li>
+              <li className="cursor-pointer">
                 <img
                   className="w-[50px] mx-1 transition-all grayscale hover:grayscale-0"
                   src={paypal}
                   alt=""
                 />
               </li>
-              <li>
+              <li className="cursor-pointer">
                 <img
                   className="w-[50px] mx-1 transition-all grayscale hover:grayscale-0"
                   src={mastercard}
                   alt=""
                 />
               </li>
-              <li>
+              <li className="cursor-pointer">
                 <img
                   className="w-[50px] mx-1 transition-all grayscale hover:grayscale-0"
                   src={amazon}
                   alt=""
                 />
               </li>
-              <li>
+              <li className="cursor-pointer">
                 <img
                   className="w-[50px] mx-1 transition-all grayscale hover:grayscale-0"
                   src={visa}
@@ -200,8 +187,8 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="w-full border-t border-grey text-center p-3 mt-6 font-semibold">
-        {/* <FontAwesomeIcon icon={faCopyright} /> */}
+      <div className="w-full border-t border-grey text-center p-3 mt-6 font-semibold flex items-center justify-center">
+        <FaCopyright />
         <span className="ms-[6px]">2023 ulman-huy</span>
       </div>
     </div>

@@ -4,14 +4,11 @@ import Footer from "../components/Footer";
 
 function DefaultLayout() {
   return (
-    <>
+    <div className="h-screen">
       <Header />
-      <div className="mt-20">
-        <Outlet />
-      </div>
-      {/* <Chat /> */}
+      <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
 

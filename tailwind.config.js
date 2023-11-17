@@ -7,9 +7,11 @@ export default {
         primary: "#ff3b5c",
         yellow: "#f88630",
         black: "rgb(18, 18, 18)",
+        error: "#ff4d4f"
       },
       backgroundColor: {
         grey: "#1b1b1b",
+        header: "rgba(18, 18, 18, 0.9)"
       },
       maxWidth: {
         default: "1200px",
