@@ -3,6 +3,9 @@ import thunk from "redux-thunk";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./reducer/userReducer";
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
 
 const persistConfig = {
   key: "root",
@@ -16,6 +19,7 @@ const appReducer = combineReducers({
 const rootReducer = (state: any, action: any) => {
   if (action.type === "USER_LOGOUT") {
     storage.removeItem("persist:root");
+    cookies.remove("accessToken");
     return appReducer(undefined, action);
   }
   return appReducer(state, action);

@@ -37,8 +37,30 @@ import store1 from "./store/store-0.webp";
 import store2 from "./store/store-2.webp";
 import store3 from "./store/store-3.webp";
 import store4 from "./store/store-4.webp";
+import trademark1 from "./trademark/logo1.png";
+import trademark2 from "./trademark/logo2.png";
+import trademark3 from "./trademark/logo3.png";
+import trademark4 from "./trademark/logo4.png";
+import trademark5 from "./trademark/logo5.png";
+import trademark6 from "./trademark/logo6.png";
+import trademark7 from "./trademark/logo7.png";
+import trademark8 from "./trademark/logo8.png";
+import trademark9 from "./trademark/logo9.png";
+import trademark10 from "./trademark/logo10.png";
+import trademark11 from "./trademark/logo11.png";
 
 export {
+  trademark1,
+  trademark2,
+  trademark3,
+  trademark4,
+  trademark5,
+  trademark6,
+  trademark7,
+  trademark8,
+  trademark9,
+  trademark10,
+  trademark11,
   storeSlide1,
   storeSlide2,
   store,

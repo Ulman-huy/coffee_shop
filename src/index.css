@@ -33,7 +33,7 @@
 }
 body {
   color: var(--white-color);
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   background-color: var(--black-background);
 }
 a {
@@ -57,4 +57,29 @@ input {
 
 .nav-active {
   text-shadow: 0 0 4px var(--primary-color);
+}
+
+.swiper-home .swiper-pagination.swiper-pagination-clickable {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+.swiper-pagination-bullet {
+  width: 16px;
+  height: 3.5px;
+  background-color: var(--hover-background);
+  margin: 0 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50px;
+}
+.swiper-pagination-bullet:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-color);
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--primary-color);
+  width: 20px;
+  box-shadow: 0 0 10px var(--primary-color);
 }

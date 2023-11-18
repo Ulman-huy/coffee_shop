@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchMe } from "../../service/user";
+import { GET } from "../../service";
 
 export const userReducer = createSlice({
   name: "user",
@@ -14,8 +14,13 @@ export const userReducer = createSlice({
   },
 });
 
-export const getMe = createAsyncThunk("user/getMe", async () => {
-  const response = await fetchMe();
+export const getMe = createAsyncThunk("user/getMe", async (token: string) => {
+  const response = await GET({
+    url: "user/me",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
   return response;
 });
 

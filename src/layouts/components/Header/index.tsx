@@ -7,11 +7,12 @@ import {
   FaUser,
   FaUserCircle,
 } from "react-icons/fa";
-import { FaArrowRightToBracket, FaGear, FaTruckFast } from "react-icons/fa6";
-// import CartItem from '../../../components/CartItem';
-import { useRef, useState } from "react";
-// import { cart_empty } from "@/assets/images";
+import { FaArrowRightToBracket, FaTruckFast } from "react-icons/fa6";
+import { useState } from "react";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineLogout } from "react-icons/md";
+import { cart_empty } from "../../../assets/images";
 
 const navbar = [
   {
@@ -38,11 +39,6 @@ const userTools = [
     to: "/package",
   },
   {
-    title: "Cài đặt",
-    icon: <FaGear />,
-    to: "/settings",
-  },
-  {
     title: "Chế độ tối",
     icon: <FaMoon />,
   },
@@ -52,55 +48,25 @@ const userTools = [
     to: "/feedback",
   },
 ];
+
 function Header() {
   const [active, setActive] = useState("/");
   const { ref, show, setShow } = useOutsideClick();
-  // const cartRef = useRef(null);
-  // const [showNavbar, setShowNavbar] = useState(false);
+  const {
+    ref: cartRef,
+    show: showCart,
+    setShow: setShowCart,
+  } = useOutsideClick();
+  const user = useSelector((state: any) => state.user.data);
 
-  const handleLogout = () => {};
+  const dispatch = useDispatch();
 
-  // const renderUser = () => (
-  //   <div className={cx("user-container")}>
-  //     {user.isLogin && (
-  //       <div className={cx("username", "line")}>
-  //         <Link to="/user">{user.username}</Link>
-  //       </div>
-  //     )}
-  //     <div className={cx("user-tools")}>
-  //       {userTools.map((tool, index) => {
-  //         let Comp = "div";
-  //         const props = {};
-  //         if (tool.to) {
-  //           props.to = tool.to;
-  //           Comp = Link;
-  //         }
-  //         return (
-  //           <Comp key={index} className={cx("tool-item")} {...props}>
-  //             <span className={cx("tool-icon")}>
-  //               <FontAwesomeIcon icon={tool.icon} />
-  //             </span>
-  //             <span className={cx("tool-title")}>{tool.title}</span>
-  //           </Comp>
-  //         );
-  //       })}
-  //     </div>
-  //     <div
-  //       onClick={() => handleLogout(user.isLogin)}
-  //       className={cx("logout", "line")}
-  //     >
-  //       <div className={cx("icon")}>
-  //         <FontAwesomeIcon icon={faArrowRightToBracket} />
-  //       </div>
-  //       <span className={cx("text")}>
-  //         {user.isLogin ? "Đăng xuất" : "Đăng nhập"}
-  //       </span>
-  //     </div>
-  //   </div>
-  // );
+  const handleLogout = () => {
+    dispatch({ type: "USER_LOGOUT" });
+  };
 
   return (
-    <header className="z-[99999] fixed top-0 h-[80px] w-full flex justify-center bg-header">
+    <header className="z-[5] fixed top-0 h-[80px] w-full flex justify-center bg-header">
       <div className="max-w-default w-full flex justify-between items-center">
         <div className="font-pacifico text-[30px] cursor-pointer">
           <Link to="/" className="m-0 py-3 text-white">
@@ -129,27 +95,35 @@ function Header() {
           >
             <FaHeart />
           </Link>
-          <div>
+          <div className="relative" ref={cartRef}>
             <Link
               to="/cart"
-              className="hover:text-primary transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
+              onMouseEnter={() => setShowCart(true)}
+              className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
             >
               <FaShoppingCart />
             </Link>
-            {/* <div className={cx("cart-container")}>
-              <div ref={cartRef} className={cx("carts")}>
-                {isEmpty && (
-                  <div className={cx("cart-empty")}>
-                    <img src={cart_empty} alt="" width={80} />
-                    <p>Chưa có sản phẩm</p>
-                  </div>
-                )}
-                {!isEmpty &&
+            {showCart && (
+              <div className="bg-white py-4 rounded-[5px] absolute top-[50px] min-w-[365px] right-0">
+                <div className="">
+                  {user && !user.cart.length && (
+                    <div className="flex flex-col items-center">
+                      <img
+                        src={cart_empty}
+                        alt=""
+                        className="w-[80px] h-[80px]"
+                      />
+                      <p className="text-black mt-3 text-[15px] font-semibold">
+                        Chưa có sản phẩm
+                      </p>
+                    </div>
+                  )}
+                  {/* {!isEmpty &&
                   cart.map((item, index) => (
                     <CartItem key={index} data={item} />
-                  ))}
-              </div>
-              {!isEmpty ? (
+                  ))} */}
+                </div>
+                {/* {!isEmpty ? (
                 <div className={cx("cart-footer")}>
                   <p className={cx("count-item")}>
                     {cart.length} sản phẩm trong giỏ hàng
@@ -160,69 +134,78 @@ function Header() {
                 </div>
               ) : (
                 ""
-              )}
-            </div> */}
+              )} */}
+              </div>
+            )}
           </div>
           <div
             ref={ref}
-            className="group transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
+            className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
           >
             <span className="hover:text-primary" onClick={() => setShow(true)}>
               <FaUser />
             </span>
             {show && (
-              <div className="absolute bg-[#eee] top-[50px] min-w-[150px] right-0 rounded-md overflow-hidden">
-                <Link
-                  to="/sigup"
-                  className="flex items-center gap-2 text-black font-medium p-2 hover:bg-[#ddd] transition-colors"
-                >
-                  <FaUserCircle />
-                  <span className="text-base">Đăng ký</span>
-                </Link>
-                <Link
-                  to="/login"
-                  className="flex items-center gap-2 text-black font-medium p-2 hover:bg-[#ddd] transition-colors"
-                >
-                  <FaArrowRightToBracket />
-                  <span className="text-base">Đăng nhập</span>
-                </Link>
+              <div className="absolute bg-white top-[50px] min-w-[180px] right-0 rounded-md overflow-hidden">
+                {user ? (
+                  <>
+                    <Link
+                      to="/info"
+                      className="block text-center text-primary text-base py-2 font-semibold border-b-[2px] border-[#ddd]"
+                    >
+                      {user.username}
+                    </Link>
+                    {userTools.map((item: any) => (
+                      <Link
+                        to={item.to}
+                        key={item.to}
+                        className="flex items-center gap-2 text-black font-medium p-2 hover:bg-[#ddd] transition-colors"
+                      >
+                        <span className="w-[20px] h-[20px]">{item.icon}</span>
+                        <span className="text-base whitespace-nowrap">
+                          {item.title}
+                        </span>
+                      </Link>
+                    ))}
+                    <div
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 text-black font-medium p-2 hover:bg-[#ddd] transition-colors border-t-[2px] border-[#ddd]"
+                    >
+                      <span className="w-[20px] h-[20px]">
+                        <MdOutlineLogout />
+                      </span>
+                      <span className="text-base">Đăng xuất</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/sigup"
+                      className="flex items-center gap-2 text-black font-medium p-2 hover:bg-[#ddd] transition-colors"
+                    >
+                      <FaUserCircle />
+                      <span className="text-base">Đăng ký</span>
+                    </Link>
+                    <Link
+                      to="/login"
+                      className="flex items-center gap-2 text-black font-medium p-2 hover:bg-[#ddd] transition-colors"
+                    >
+                      <FaArrowRightToBracket />
+                      <span className="text-base">Đăng nhập</span>
+                    </Link>
+                  </>
+                )}
               </div>
             )}
           </div>
-          {/* <div className="w-[34px] h-[34px] text-[20px] flex justify-center items-center"> */}
-          {/* <FontAwesomeIcon icon={faBars} /> */}
-          {/* </div> */}
         </div>
-        {/* <div
-          className={cx("overlay", { show: showNavbar })}
-          onClick={() => setShowNavbar(false)}
-        ></div> */}
-        <div
-          //  className={cx("nav-mb", { show: showNavbar })}
-          className="fixed z-[9999] bg-black border-l border-primary w-[80%] shadow-md translate-x-[100%] opacity-0 transition-all"
-        >
-          {/* <div className={cx("nav-mb-user")}>
-            <div className={cx("avatar")}> */}
-          {/* <FontAwesomeIcon icon={faUser} /> */}
-          {/* </div>
-            <div className={cx("register")}>
-              <Link to="/sigup">Đăng ký</Link>
-              <span>|</span>
-              <Link className={cx("login-mb")} to="/login">
-                Đăng nhập
-              </Link>
-            </div>
-          </div> */}
+        {/* <div className="fixed z-[9999] bg-black border-l border-primary w-[80%] shadow-md translate-x-[100%] opacity-0 transition-all">
           {navbar.map((nav, index) => (
-            <NavLink
-              key={index}
-              // className={(nav) => cx("nav-mb-item", { active: nav.isActive })}
-              to={nav.to}
-            >
+            <NavLink key={index} to={nav.to}>
               {nav.title}
             </NavLink>
           ))}
-        </div>
+        </div> */}
       </div>
     </header>
   );

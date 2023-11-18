@@ -1,10 +1,5 @@
 import { cafein_fin, slider_1, slider_2 } from "../../../assets/images";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import 'swiper/css';
-import 'swiper/css/effect-flip';
-import 'swiper/css/navigation';
-
 import { Autoplay, EffectFlip } from "swiper/modules";
 
 function SliderAuth() {
