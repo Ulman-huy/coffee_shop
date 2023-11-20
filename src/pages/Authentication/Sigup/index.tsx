@@ -1,16 +1,19 @@
-import { FacebookBlueIcon, GoogleIcon } from "../../components/Icons";
-import Input from "../../components/Input";
-import { GlobalContext } from "../../context";
+import { FacebookBlueIcon } from "../../../components/Icons";
+import Input from "../../../components/Input";
+import { GlobalContext } from "../../../context";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { POST } from "../../service";
+import { Link, useNavigate } from "react-router-dom";
+import { POST } from "../../../service";
+import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 function Sigup() {
   const { setLoading }: any = useContext(GlobalContext);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -25,6 +28,41 @@ function Sigup() {
     await POST(options)
       .then((res) => {
         toast.success(res.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleLoginGoogle = async (credentialResponse: any) => {
+    setLoading(true);
+    const {
+      email,
+      picture,
+      email_verified,
+      family_name,
+      given_name,
+      name,
+    }: any = jwtDecode(credentialResponse.credential);
+
+    const options: any = {
+      url: "google",
+      body: {
+        email: email,
+        verify: email_verified,
+        avatar: picture,
+      },
+    };
+
+    if (family_name && given_name) {
+      options.body.username = family_name + given_name;
+    } else {
+      options.body.username = name;
+    }
+
+    await POST(options)
+      .then((response) => {
+        if (response) navigate(`/callback?token=${response.accessToken}`);
       })
       .finally(() => {
         setLoading(false);
@@ -79,10 +117,12 @@ function Sigup() {
           <FacebookBlueIcon />
           <span>Facebook</span>
         </div>
-        <div className="flex items-center justify-center border border-grey h-10 w-1/2 mx-2 text-[14px] bg-white text-black font-medium rounded-[5px] gap-1">
-          <GoogleIcon />
-          <span>Google</span>
-        </div>
+        <GoogleLogin
+          onSuccess={handleLoginGoogle}
+          onError={() => {
+            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau!");
+          }}
+        />
       </div>
       <div className="mt-[6px] text-[13px] flex text-center justify-center">
         <p className="max-w-[300px] mb-0">

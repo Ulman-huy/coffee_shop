@@ -13,6 +13,7 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineLogout } from "react-icons/md";
 import { cart_empty } from "../../../assets/images";
+import { toast } from "react-toastify";
 
 const navbar = [
   {
@@ -50,6 +51,7 @@ const userTools = [
 ];
 
 function Header() {
+  const user = useSelector((state: any) => state.user.data);
   const [active, setActive] = useState("/");
   const { ref, show, setShow } = useOutsideClick();
   const {
@@ -57,12 +59,11 @@ function Header() {
     show: showCart,
     setShow: setShowCart,
   } = useOutsideClick();
-  const user = useSelector((state: any) => state.user.data);
-
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch({ type: "USER_LOGOUT" });
+    toast.success("Đã đăng xuất tài khoản!");
   };
 
   return (
@@ -143,7 +144,15 @@ function Header() {
             className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
           >
             <span className="hover:text-primary" onClick={() => setShow(true)}>
-              <FaUser />
+              {user && user.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt="avatar"
+                  className="rounded-full object-cover"
+                />
+              ) : (
+                <FaUser />
+              )}
             </span>
             {show && (
               <div className="absolute bg-white top-[50px] min-w-[180px] right-0 rounded-md overflow-hidden">
@@ -151,7 +160,7 @@ function Header() {
                   <>
                     <Link
                       to="/info"
-                      className="block text-center text-primary text-base py-2 font-semibold border-b-[2px] border-[#ddd]"
+                      className="block text-center text-primary text-base py-2 font-semibold border-b-[2px] border-[#ddd] hover:bg-[#ddd] transition-colors duration-300"
                     >
                       {user.username}
                     </Link>

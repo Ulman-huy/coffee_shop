@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { FacebookBlueIcon } from "../../components/Icons";
-import Input from "../../components/Input";
-import { GlobalContext } from "../../context";
-import { POST } from "../../service";
+import { FacebookBlueIcon } from "../../../components/Icons";
+import Input from "../../../components/Input";
+import { GlobalContext } from "../../../context";
+import { POST } from "../../../service";
 import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
@@ -34,25 +34,33 @@ function Login() {
 
   const handleLoginGoogle = async (credentialResponse: any) => {
     setLoading(true);
-    const { email, picture, email_verified, family_name, given_name }: any =
-      jwtDecode(credentialResponse.credential);
+    const {
+      email,
+      picture,
+      email_verified,
+      family_name,
+      given_name,
+      name,
+    }: any = jwtDecode(credentialResponse.credential);
 
-    const options = {
-      url: "user/google",
+    const options: any = {
+      url: "google",
       body: {
         email: email,
-        username: family_name + given_name,
         verify: email_verified,
         avatar: picture,
       },
     };
 
+    if (family_name && given_name) {
+      options.body.username = family_name + given_name;
+    } else {
+      options.body.username = name;
+    }
+
     await POST(options)
       .then((response) => {
         if (response) navigate(`/callback?token=${response.accessToken}`);
-      })
-      .catch(() => {
-        toast.error("Có lỗi xảy ra. Vui lòng thử lại");
       })
       .finally(() => {
         setLoading(false);
@@ -94,10 +102,6 @@ function Login() {
           <FacebookBlueIcon />
           <span>Facebook</span>
         </div>
-        {/* <div className="flex items-center justify-center border border-grey h-10 w-1/2 mx-2 text-[14px] bg-white text-black font-medium rounded-[5px] gap-1">
-          <GoogleIcon />
-          <span>Google</span>
-        </div> */}
         <GoogleLogin
           onSuccess={handleLoginGoogle}
           onError={() => {
@@ -109,6 +113,11 @@ function Login() {
         <span>Bạn mới biết đến coffeeHouse?</span>
         <Link to="/sigup" className="text-primary ms-1">
           Đăng ký
+        </Link>
+      </div>
+      <div className="flex justify-center">
+        <Link to="/forgot-password" className="text-primary ms-1">
+          Quên mật khẩu
         </Link>
       </div>
     </div>

@@ -8,9 +8,8 @@ import DefaultLayout from "./layouts/DefaultLayout";
 import NotFound from "./pages/404";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
-import Sigup from "./pages/Sigup";
 import HeaderOnly from "./layouts/HeaderOnly";
-import Login from "./pages/Login";
+import Login from "./pages/Authentication/Login";
 import Callback from "./pages/Callback";
 import { GlobalContext } from "./context";
 import { useState } from "react";
@@ -18,6 +17,9 @@ import Lottie from "lottie-react";
 import loadingLottie from "./assets/lottie/loading.json";
 import Store from "./pages/Store";
 import Discover from "./pages/Discover";
+import Sigup from "./pages/Authentication/Sigup";
+import ForgotPassword from "./pages/Authentication/ForgotPassword";
+import ChangePassword from "./pages/Authentication/ChangePassword";
 
 export const routers: any = [
   {
@@ -55,6 +57,14 @@ export const routers: any = [
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/change-password",
+        element: <ChangePassword />,
       },
     ],
   },

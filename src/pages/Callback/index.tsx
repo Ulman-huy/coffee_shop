@@ -15,12 +15,18 @@ function Callback() {
   const handleRedirect = async () => {
     setLoading(true);
     const token = searchParams.get("token");
+    const redirect = searchParams.get("redirect");
     if (token) {
       setCookie("accessToken", token, { path: "/" });
       await dispatch(getMe(token) as any);
     }
-    setLoading(false)
+    if (redirect) {
+      setLoading(false);
+      navigate(redirect);
+      return;
+    }
     navigate("/");
+    setLoading(false);
   };
   useEffect(() => {
     handleRedirect();
