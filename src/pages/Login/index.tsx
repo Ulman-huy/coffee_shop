@@ -7,14 +7,12 @@ import { POST } from "../../service";
 import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
 
 function Login() {
   const { setLoading }: any = useContext(GlobalContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     setLoading(true);
