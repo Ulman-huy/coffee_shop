@@ -41,7 +41,6 @@ a {
   color: var(--white-color);
 }
 button {
-  border: none;
   cursor: pointer;
 }
 ul {
@@ -51,20 +50,22 @@ ul {
 }
 input {
   outline: none;
-  border: none;
   padding-left: 16px;
 }
 
 .nav-active {
   text-shadow: 0 0 4px var(--primary-color);
 }
-
+.nav-active:hover {
+  text-shadow: 0 0 4px var(--primary-color);
+}
+/* Swiper home */
 .swiper-home .swiper-pagination.swiper-pagination-clickable {
   display: flex;
   justify-content: center;
   gap: 4px;
 }
-.swiper-pagination-bullet {
+.swiper-home .swiper-pagination-bullet {
   width: 16px;
   height: 3.5px;
   background-color: var(--hover-background);
@@ -73,13 +74,72 @@ input {
   transition: all 0.3s ease;
   border-radius: 50px;
 }
-.swiper-pagination-bullet:hover {
+.swiper-home .swiper-pagination-bullet:hover {
   background-color: var(--primary-color);
   box-shadow: 0 0 10px var(--primary-color);
 }
 
-.swiper-pagination-bullet-active {
+.swiper-home .swiper-pagination-bullet-active {
   background-color: var(--primary-color);
   width: 20px;
   box-shadow: 0 0 10px var(--primary-color);
+}
+/* Swiper Product */
+.swiper-product .swiper-pagination.swiper-pagination-clickable {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  width: 100%;
+  bottom: 16px;
+  z-index: 1;
+}
+.swiper-product .swiper-pagination-bullet {
+  width: 16px;
+  height: 3.5px;
+  background-color: var(--hover-background);
+  margin: 0 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50px;
+}
+.swiper-product .swiper-pagination-bullet:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 10px var(--primary-color);
+}
+
+.swiper-product .swiper-pagination-bullet-active {
+  background-color: var(--primary-color);
+  width: 20px;
+  box-shadow: 0 0 10px var(--primary-color);
+}
+/* Custom Range */
+.process {
+  right: 0%;
+  left: 0%;
+}
+.range-custom {
+  position: absolute;
+  pointer-events: none;
+  top: -11px;
+  left: 0;
+  border-radius: 50px;
+  padding-left: 0;
+  width: 100%;
+  -webkit-appearance: none;
+  height: 25px;
+  background: none;
+}
+.range-custom::-webkit-slider-thumb {
+  pointer-events: auto;
+  border-radius: 50px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--yellow-color);
+  cursor: pointer;
+}
+/* Title store */
+.title-store {
+  text-shadow: 0 0 1px #000000, 0 0 2px #666;
 }

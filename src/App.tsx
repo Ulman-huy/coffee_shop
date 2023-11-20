@@ -1,7 +1,7 @@
 import "swiper/css";
 import "swiper/css/effect-fade";
-import 'swiper/css/effect-flip';
-import 'swiper/css/navigation';
+import "swiper/css/effect-flip";
+import "swiper/css/navigation";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
@@ -16,6 +16,8 @@ import { GlobalContext } from "./context";
 import { useState } from "react";
 import Lottie from "lottie-react";
 import loadingLottie from "./assets/lottie/loading.json";
+import Store from "./pages/Store";
+import Discover from "./pages/Discover";
 
 export const routers: any = [
   {
@@ -28,6 +30,14 @@ export const routers: any = [
       {
         path: "/products",
         element: <Product />,
+      },
+      {
+        path: "/store",
+        element: <Store />,
+      },
+      {
+        path: "/discover",
+        element: <Discover />,
       },
       {
         path: "/callback",

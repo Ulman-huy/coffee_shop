@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 function DefaultLayout() {
   return (
-    <div className="h-screen">
+    <div className="h-screen pt-[80px]">
       <Header />
       <Outlet />
       <Footer />

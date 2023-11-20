@@ -8,7 +8,7 @@ import Trademark from "./Trademark";
 
 function Home() {
   return (
-    <div className="min-h-screen pt-[80px]">
+    <div className="min-h-screen">
       <Slider />
       <Trademark />
       <Advantages />
