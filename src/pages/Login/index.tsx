@@ -1,15 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { FacebookBlueIcon, GoogleIcon } from "../../components/Icons";
+import { FacebookBlueIcon } from "../../components/Icons";
 import Input from "../../components/Input";
 import { GlobalContext } from "../../context";
 import { POST } from "../../service";
+import { GoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
 
 function Login() {
   const { setLoading }: any = useContext(GlobalContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -21,8 +26,35 @@ function Login() {
       },
     };
     await POST(options)
-      .then((res: any) => {
-        if (res) navigate(`/callback?token=${res.accessToken}`);
+      .then((response: any) => {
+        if (response) navigate(`/callback?token=${response.accessToken}`);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleLoginGoogle = async (credentialResponse: any) => {
+    setLoading(true);
+    const { email, picture, email_verified, family_name, given_name }: any =
+      jwtDecode(credentialResponse.credential);
+
+    const options = {
+      url: "user/google",
+      body: {
+        email: email,
+        username: family_name + given_name,
+        verify: email_verified,
+        avatar: picture,
+      },
+    };
+
+    await POST(options)
+      .then((response) => {
+        if (response) navigate(`/callback?token=${response.accessToken}`);
+      })
+      .catch(() => {
+        toast.error("Có lỗi xảy ra. Vui lòng thử lại");
       })
       .finally(() => {
         setLoading(false);
@@ -64,10 +96,16 @@ function Login() {
           <FacebookBlueIcon />
           <span>Facebook</span>
         </div>
-        <div className="flex items-center justify-center border border-grey h-10 w-1/2 mx-2 text-[14px] bg-white text-black font-medium rounded-[5px] gap-1">
+        {/* <div className="flex items-center justify-center border border-grey h-10 w-1/2 mx-2 text-[14px] bg-white text-black font-medium rounded-[5px] gap-1">
           <GoogleIcon />
           <span>Google</span>
-        </div>
+        </div> */}
+        <GoogleLogin
+          onSuccess={handleLoginGoogle}
+          onError={() => {
+            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau!");
+          }}
+        />
       </div>
       <div className="text-center mt-6 text-[15px] text-grey">
         <span>Bạn mới biết đến coffeeHouse?</span>
