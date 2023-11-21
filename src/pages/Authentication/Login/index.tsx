@@ -61,6 +61,9 @@ function Login() {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -88,6 +91,9 @@ function Login() {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (

@@ -66,6 +66,9 @@ function Sigup() {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -93,6 +96,9 @@ function Sigup() {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
