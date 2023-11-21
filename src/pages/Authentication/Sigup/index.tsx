@@ -1,12 +1,16 @@
-import { FacebookBlueIcon } from "../../../components/Icons";
+import { FacebookBlueIcon, GoogleIcon } from "../../../components/Icons";
 import Input from "../../../components/Input";
 import { GlobalContext } from "../../../context";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { POST } from "../../../service";
-import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
-import { jwtDecode } from "jwt-decode";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../../../main";
 
 function Sigup() {
   const { setLoading }: any = useContext(GlobalContext);
@@ -28,44 +32,67 @@ function Sigup() {
     await POST(options)
       .then((res) => {
         toast.success(res.message);
+        setUsername("");
+        setEmail("");
+        setPassword("");
       })
       .finally(() => {
         setLoading(false);
       });
   };
 
-  const handleLoginGoogle = async (credentialResponse: any) => {
+  const handleLoginGoogle = async () => {
+    const provider = new GoogleAuthProvider();
     setLoading(true);
-    const {
-      email,
-      picture,
-      email_verified,
-      family_name,
-      given_name,
-      name,
-    }: any = jwtDecode(credentialResponse.credential);
-
-    const options: any = {
-      url: "google",
-      body: {
-        email: email,
-        verify: email_verified,
-        avatar: picture,
-      },
-    };
-
-    if (family_name && given_name) {
-      options.body.username = family_name + given_name;
-    } else {
-      options.body.username = name;
-    }
-
-    await POST(options)
-      .then((response) => {
-        if (response) navigate(`/callback?token=${response.accessToken}`);
+    await signInWithPopup(auth, provider)
+      .then(async (response) => {
+        const { email, displayName, photoURL, emailVerified } = response.user;
+        const options = {
+          url: "socials",
+          body: {
+            username: displayName,
+            email: email,
+            verify: emailVerified,
+            avatar: photoURL,
+          },
+        };
+        await POST(options)
+          .then((response) => {
+            if (response) navigate(`/callback?token=${response.accessToken}`);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       })
-      .finally(() => {
-        setLoading(false);
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
+  const handleLoginFacebook = async () => {
+    const provider = new FacebookAuthProvider();
+    await signInWithPopup(auth, provider)
+      .then(async (response) => {
+        const { email, displayName, photoURL, emailVerified } = response.user;
+        const options = {
+          url: "socials",
+          body: {
+            username: displayName,
+            email: email,
+            verify: emailVerified,
+            avatar: photoURL,
+          },
+        };
+        await POST(options)
+          .then((response) => {
+            if (response) navigate(`/callback?token=${response.accessToken}`);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
@@ -113,16 +140,20 @@ function Sigup() {
         <div className="bg-[#dddddd80] w-full h-[1px]"></div>
       </div>
       <div className="flex justify-between items-center">
-        <div className="flex items-center justify-center border border-grey h-10 w-1/2 mx-2 text-[14px] bg-white text-black font-medium rounded-[5px] gap-1">
+        <div
+          onClick={handleLoginFacebook}
+          className="flex items-center cursor-pointer justify-center border border-grey h-10 w-1/2 mx-2 text-[14px] bg-white text-black font-medium rounded-[5px] gap-1"
+        >
           <FacebookBlueIcon />
           <span>Facebook</span>
         </div>
-        <GoogleLogin
-          onSuccess={handleLoginGoogle}
-          onError={() => {
-            toast.error("Có lỗi xảy ra. Vui lòng thử lại sau!");
-          }}
-        />
+        <div
+          onClick={handleLoginGoogle}
+          className="flex items-center cursor-pointer justify-center border border-grey h-10 w-1/2 mx-2 text-[14px] bg-white text-black font-medium rounded-[5px] gap-1"
+        >
+          <GoogleIcon />
+          <span>Google</span>
+        </div>
       </div>
       <div className="mt-[6px] text-[13px] flex text-center justify-center">
         <p className="max-w-[300px] mb-0">
