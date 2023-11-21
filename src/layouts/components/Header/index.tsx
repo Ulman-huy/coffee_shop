@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineLogout } from "react-icons/md";
 import { cart_empty } from "../../../assets/images";
 import { toast } from "react-toastify";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../main";
 
 const navbar = [
   {
@@ -63,6 +65,7 @@ function Header() {
 
   const handleLogout = () => {
     dispatch({ type: "USER_LOGOUT" });
+    signOut(auth);
     toast.success("Đã đăng xuất tài khoản!");
   };
 
