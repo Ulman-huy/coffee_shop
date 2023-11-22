@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./reducer/userReducer";
 import { Cookies } from "react-cookie";
+import settingReducer from "./reducer/settingReducer";
 
 const cookies = new Cookies();
 
@@ -14,6 +15,7 @@ const persistConfig = {
 
 const appReducer = combineReducers({
   user: userReducer,
+  setting: settingReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

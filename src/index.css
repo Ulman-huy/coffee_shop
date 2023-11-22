@@ -143,3 +143,17 @@ input {
 .title-store {
   text-shadow: 0 0 1px #000000, 0 0 2px #666;
 }
+.dashboard__container .ant-page-header {
+  padding: 0;
+}
+.button-collapsed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+  border-top: 1px solid #dddddd;
+}
+.dashboard__container .ant-page-header-heading {
+  padding-block-start: 0 !important;
+}

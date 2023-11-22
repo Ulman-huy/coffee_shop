@@ -1,0 +1,20 @@
+{
+  "menu": {
+    "dashboard": "Tổng quan",
+    "example": "Ví dụ",
+    "children": "Ví dụ Item"
+  },
+  "common": {
+    "home": "Trang chủ",
+    "logout": "Đăng xuất",
+    "setting": "Cài đặt",
+    "account": "Tài khoản",
+    "notify": "Thông báo"
+  },
+  "dashboard": "Tổng quan",
+  "example": "Ví dụ",
+  "children": "Ví dụ Item",
+
+  "not-found": "Không tìm thấy",
+  "not-found-description": "Xin lỗi, trang bạn truy cập không tồn tại."
+}

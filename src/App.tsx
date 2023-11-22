@@ -20,6 +20,9 @@ import Discover from "./pages/Discover";
 import Sigup from "./pages/Authentication/Sigup";
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import ChangePassword from "./pages/Authentication/ChangePassword";
+import AdminLayout from "./layouts/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Example from "./pages/admin/Example";
 
 export const routers: any = [
   {
@@ -65,6 +68,19 @@ export const routers: any = [
       {
         path: "/change-password",
         element: <ChangePassword />,
+      },
+    ],
+  },
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin",
+        element: <Dashboard />,
+      },
+      {
+        path: "/admin/example/children",
+        element: <Example />,
       },
     ],
   },
