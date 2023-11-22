@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs";
 import { Breadcrumb, Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import { usePageVisibility } from "../../utils/TabChangeHelper";
 import FooterAdmin from "../components/FooterAdmin";
 import HeaderAdmin from "../components/HeaderAdmin";
 import defaultProps from "../../pages/admin/_defaultProps";
@@ -16,12 +15,11 @@ function AdminLayout() {
   const [pathname, setPathname] = useState<string>("");
   const { width } = useWindowDimensions();
   const [path, setPath] = useState<{ title: string }[]>([]);
-  const isBrowserTabChanged = usePageVisibility();
 
   useEffect(() => {
     const currentPath = location.pathname;
     setPathname(currentPath !== "/" ? currentPath : "/");
-  }, [isBrowserTabChanged, width]);
+  }, [location.pathname, width]);
 
   useEffect(() => {
     setPath(() => {
@@ -73,7 +71,9 @@ function AdminLayout() {
           >
             <Link
               to={`${menuItemProps.path}`}
-              className={`flex ${isShow ? "gap-3 relative top-[-3px]" : "gap-1"}`}
+              className={`flex ${
+                isShow ? "gap-3 relative top-[-3px]" : "gap-1"
+              }`}
             >
               <span className={`${isShow && "relative left-3"}`}>
                 {menuItemProps.icon}
