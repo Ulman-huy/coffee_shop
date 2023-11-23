@@ -21,7 +21,7 @@ function Login() {
   const handleSubmit = async () => {
     setLoading(true);
     const options = {
-      url: "login",
+      url: "auth/login",
       body: {
         email,
         password,
@@ -43,7 +43,7 @@ function Login() {
       .then(async (response) => {
         const { email, displayName, photoURL, emailVerified } = response.user;
         const options = {
-          url: "socials",
+          url: "auth/socials",
           body: {
             username: displayName,
             email: email,
@@ -73,7 +73,7 @@ function Login() {
       .then(async (response) => {
         const { email, displayName, photoURL, emailVerified } = response.user;
         const options = {
-          url: "socials",
+          url: "auth/socials",
           body: {
             username: displayName,
             email: email,

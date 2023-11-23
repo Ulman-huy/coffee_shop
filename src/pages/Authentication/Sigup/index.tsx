@@ -22,7 +22,7 @@ function Sigup() {
   const handleSubmit = async () => {
     setLoading(true);
     const options = {
-      url: "sigup",
+      url: "auth/sigup",
       body: {
         username,
         email,
@@ -48,7 +48,7 @@ function Sigup() {
       .then(async (response) => {
         const { email, displayName, photoURL, emailVerified } = response.user;
         const options = {
-          url: "socials",
+          url: "auth/socials",
           body: {
             username: displayName,
             email: email,
@@ -78,7 +78,7 @@ function Sigup() {
       .then(async (response) => {
         const { email, displayName, photoURL, emailVerified } = response.user;
         const options = {
-          url: "socials",
+          url: "auth/socials",
           body: {
             username: displayName,
             email: email,
