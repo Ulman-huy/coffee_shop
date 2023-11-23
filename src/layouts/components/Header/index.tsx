@@ -210,11 +210,13 @@ function Header() {
               </div>
             )}
           </div>
-          <Link to="/admin">
-            <div className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer">
-              <MdDashboard />
-            </div>
-          </Link>
+          {user && user.rules == "ADMIN" && (
+            <Link to="/admin">
+              <div className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer">
+                <MdDashboard />
+              </div>
+            </Link>
+          )}
         </div>
         {/* <div className="fixed z-[9999] bg-black border-l border-primary w-[80%] shadow-md translate-x-[100%] opacity-0 transition-all">
           {navbar.map((nav, index) => (

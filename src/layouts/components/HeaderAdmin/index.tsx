@@ -15,6 +15,7 @@ import { TbSunLow, TbMoon } from "react-icons/tb";
 
 function HeaderAdmin() {
   const [open, setOpen] = useState(false);
+  const user = useSelector((state: any) => state.user.data);
   const setting = useSelector((state: any) => state.setting);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -126,9 +127,9 @@ function HeaderAdmin() {
             placement="bottomRight"
             overlayClassName="popover-select-avatar"
             content={
-              <ul className="select-avatar">
-                <li className="flex cursor-pointer py-[6px] gap-2">
-                  <span style={{ fontWeight: 700 }}>Endrosi Jahah</span>
+              <ul className="select-avatar min-w-[150px]">
+                <li className="flex cursor-pointer py-[6px] gap-2 justify-center">
+                  <span style={{ fontWeight: 700 }}>{user.username}</span>
                 </li>
                 <li className="flex cursor-pointer py-[6px] gap-2">
                   <LuUser style={{ fontSize: 20 }} />
@@ -146,7 +147,7 @@ function HeaderAdmin() {
             }
           >
             <Avatar
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReurPZGpAy4GXkIPzgzcJdimbQNwYahdFjVg&usqp=CAU"
+              src={user.avatar}
               style={{ verticalAlign: "middle" }}
               size="large"
               className="cursor-pointer"
