@@ -2,7 +2,11 @@
   "menu": {
     "dashboard": "Dashboard",
     "example": "Example",
-    "children": "Example Item"
+    "children": "Example Item",
+    "products": "Product",
+    "products all": "All Prodcuts",
+    "create product": "Create Product",
+    "create": "Thêm mới sản phẩm"
   },
   "common": {
     "home": "Home",
@@ -11,6 +15,10 @@
     "account": "Account",
     "notify": "Notifications"
   },
+  "create": "Thêm mới sản phẩm",
+  "create product": "Create Product",
+  "products-all": "All Prodcuts",
+  "products": "All Product",
   "dashboard": "Dashboard",
   "example": "Example",
   "children": "Example Item",

@@ -23,6 +23,8 @@ import ChangePassword from "./pages/Authentication/ChangePassword";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import Example from "./pages/admin/Example";
+import Products from "./pages/admin/Products";
+import CreateProduct from "./pages/admin/Products/createProduct";
 
 export const routers: any = [
   {
@@ -77,6 +79,14 @@ export const routers: any = [
       {
         path: "/admin",
         element: <Dashboard />,
+      },
+      {
+        path: "/admin/products",
+        element: <Products />,
+      },
+      {
+        path: "/admin/products/create",
+        element: <CreateProduct />,
       },
       {
         path: "/admin/example/children",

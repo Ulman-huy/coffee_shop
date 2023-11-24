@@ -4,41 +4,7 @@ import { RiSearch2Line } from "react-icons/ri";
 import { FaAngleDown } from "react-icons/fa6";
 import { renderStar } from "../../utils";
 import { product_empty } from "../../assets/images";
-
-const BRAND_LIST = [
-  "Starbucks",
-  "HighLands",
-  "Gờ Coffee",
-  "Cheese Coffee",
-  "Phúc Long",
-  "VinaCafe",
-  "NesCafe",
-  "Ông Bầu",
-  "Chuk Chuk",
-  "Laha Coffee",
-  "Katinat Coffee",
-  "Trung Nguyên",
-  "Trà Atiso",
-  "Trà Thái Nguyên",
-  "Trà sữa Koi Thé",
-  "Trà Olong Trà Ý",
-  "Trà Sen Việt",
-  "Trà Vạn Lộc",
-  "Trà Thượng Hạng",
-  "Trà Thanh Tâm",
-  "Trà Hoa Viên",
-  "Trà Việt Nam",
-  "Kinh Đô",
-  "Bibica",
-  "Phước Lộc Thọ",
-  "ABC Bakery",
-  "Bánh Đa Lợn Huế",
-  "Thăng Long",
-  "Hải Hà",
-  "Đức Phát",
-  "Anh Đào",
-  "Kẹo Mèo",
-];
+import { BRAND_LIST } from "../../data";
 
 function Product() {
   const [minValue, setMinValue] = useState(0);

@@ -3,7 +3,7 @@ import { FaRegCopyright } from "react-icons/fa6";
 
 function FooterAdmin() {
   return (
-    <Row justify="center" align="middle">
+    <Row justify="center" align="middle" className="text-black">
       <FaRegCopyright />
       <span style={{ paddingInlineStart: 8 }}>• 2023 – Endrosi</span>
     </Row>
