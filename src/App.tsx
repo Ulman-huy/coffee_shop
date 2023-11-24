@@ -24,7 +24,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import Example from "./pages/admin/Example";
 import Products from "./pages/admin/Products";
-import CreateProduct from "./pages/admin/Products/createProduct";
+import CreateProduct from "./pages/admin/Products/CreateProduct";
 
 export const routers: any = [
   {

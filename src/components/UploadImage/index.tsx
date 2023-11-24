@@ -11,8 +11,8 @@ type UploadProps = {
 
 const UploadImage = ({ name }: UploadProps) => {
   const [cookies] = useCookies();
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [loading, _setLoading] = useState(false);
+  const [imageUrl, _setImageUrl] = useState<string>();
   const [fileList, setFileList] = useState<any>([]);
 
   //   const getBase64 = (file: any): Promise<string> =>
