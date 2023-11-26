@@ -1,38 +1,20 @@
 import { useState } from "react";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Form, message, Upload } from "antd";
+import { Col, Form, Image, message, Row, Upload } from "antd";
 import type { RcFile } from "antd/es/upload/interface";
 import { useCookies } from "react-cookie";
 import { BASE_API } from "../../config/contants";
 
 type UploadProps = {
-  name: string;
+  setListImage: any;
 };
 
-const UploadImage = ({ name }: UploadProps) => {
+const UploadImage = ({ setListImage: setImages }: UploadProps) => {
   const [cookies] = useCookies();
   const [loading, _setLoading] = useState(false);
   const [imageUrl, _setImageUrl] = useState<string>();
   const [fileList, setFileList] = useState<any>([]);
 
-  //   const getBase64 = (file: any): Promise<string> =>
-  //     new Promise((resolve, reject) => {
-  //       const reader = new FileReader();
-  //       reader.readAsDataURL(file);
-  //       reader.onload = () => resolve(reader.result as string);
-  //       reader.onerror = (error) => reject(error);
-  //     });
-  //   const handlePreview = async (file: any) => {
-  //     if (!file.url && !file.preview) {
-  //       file.preview = await getBase64(file.originFileObj as RcFile);
-  //     }
-
-  //     setPreviewImage(file.url || (file.preview as string));
-  //     setPreviewVisible(true);
-  //     setPreviewTitle(
-  //       file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
-  //     );
-  //   };
   const beforeUpload = (file: RcFile) => {
     const isValidImage =
       file.type === "image/jpeg" ||
@@ -50,6 +32,7 @@ const UploadImage = ({ name }: UploadProps) => {
 
   const handleChange = async ({ fileList: newFileList }: any) => {
     await setFileList(newFileList);
+    setImages(newFileList);
   };
   const uploadButton = (
     <div>
@@ -66,8 +49,25 @@ const UploadImage = ({ name }: UploadProps) => {
   };
 
   return (
-    <>
-      <Form.Item name={name} getValueFromEvent={getImages}>
+    <Form.Item name="images" getValueFromEvent={getImages}>
+      <Row className="flex-nowrap gap-2">
+        {fileList.map((img: any) => {
+          if (img.url) {
+            return (
+              <Col className="w-[100px] h-[100px] overflow-hidden rounded-lg flex-shrink-0 object-center">
+                <img className="w-full h-full object-cover" src={img.url} />
+              </Col>
+            );
+          }
+          return (
+            <Col className="w-[100px] h-[100px] overflow-hidden rounded-lg flex-shrink-0">
+              <Image
+                className="w-full h-full object-cover object-center"
+                src={img?.response?.url}
+              />
+            </Col>
+          );
+        })}
         <Upload
           name="file"
           listType="picture-card"
@@ -78,9 +78,6 @@ const UploadImage = ({ name }: UploadProps) => {
           headers={{
             Authorization: "Bearer " + cookies.accessToken,
           }}
-          onPreview={(e) => {
-            console.log(e);
-          }}
           beforeUpload={beforeUpload}
           onChange={handleChange}
           accept=".png, .jpg, .jpeg"
@@ -88,8 +85,8 @@ const UploadImage = ({ name }: UploadProps) => {
         >
           {imageUrl ? null : uploadButton}
         </Upload>
-      </Form.Item>
-    </>
+      </Row>
+    </Form.Item>
   );
 };
 

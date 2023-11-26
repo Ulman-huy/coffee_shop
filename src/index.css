@@ -157,3 +157,9 @@ input {
 .dashboard__container .ant-page-header-heading {
   padding-block-start: 0 !important;
 }
+.table__data .ant-page-header {
+  padding: 0 12px;
+}
+.ant-popconfirm-buttons button:last-child {
+  background-color: #f88630;
+}

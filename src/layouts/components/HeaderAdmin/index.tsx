@@ -32,10 +32,11 @@ function HeaderAdmin() {
 
   return (
     <>
+      <Col className="h-[45px]"></Col>
       <Row
         justify={"end"}
         style={{ boxShadow: "0 4px 2px -2px #dddddd80", padding: "7px 24px" }}
-        className="bg-white"
+        className="bg-white fixed w-full right-0 top-0"
       >
         <Space align="center" size={"large"}>
           <Col className="mt-2 text-black">
