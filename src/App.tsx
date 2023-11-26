@@ -22,7 +22,6 @@ import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import ChangePassword from "./pages/Authentication/ChangePassword";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
-import Example from "./pages/admin/Example";
 import Products from "./pages/admin/Products";
 import CreateProduct from "./pages/admin/Products/CreateProduct";
 
@@ -87,10 +86,6 @@ export const routers: any = [
       {
         path: "/admin/products/create",
         element: <CreateProduct />,
-      },
-      {
-        path: "/admin/example/children",
-        element: <Example />,
       },
     ],
   },
