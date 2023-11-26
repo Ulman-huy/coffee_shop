@@ -29,3 +29,11 @@ export const PUT = async ({ url, params, body, headers }: Props) => {
     toast.error(error.response.data.message);
   }
 };
+
+export const DELETE = async ({ url, params, headers }: Props) => {
+  try {
+    return (await instanse.delete(url, { params, headers })).data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+  }
+};

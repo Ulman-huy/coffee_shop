@@ -16,7 +16,8 @@ function StatusTag({ status, full, upper, lower, normal }: Props) {
     DELETED: "#bf4646",
     COFFEE: "#4f2020",
     TEA: "#b0b644",
-    DISHED: "#a6b3ab"
+    DISHED: "#a6b3ab",
+    STOP: "#de4e4e"
   };
 
   return (

@@ -16,13 +16,13 @@ import {
 } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useEffect, useState, useId } from "react";
-import { GET } from "../../../service";
+import { DELETE, GET, PUT } from "../../../service";
 import { IoIosImages } from "react-icons/io";
 import ViewImage from "./components/ViewImage";
 import dayjs from "dayjs";
 import StatusTag from "../../../components/StatusTag";
 import { AiFillEdit } from "react-icons/ai";
-import { FaTrash } from "react-icons/fa";
+import { FaRegStopCircle, FaTrash } from "react-icons/fa";
 import EditProduct from "./components/EditProduct";
 import { BRAND_LIST } from "../../../data";
 
@@ -59,7 +59,6 @@ function Products() {
           setTableData(response.data);
           setTotalPage(response.totalPage);
         }
-        console.log({ response });
       })
       .catch(() => {
         message.error("Lấy thông tin sản phẩm thất bại!");
@@ -79,7 +78,28 @@ function Products() {
     }
   }, [modalEdit]);
 
-  const handleDeleteRecord = async (_id: string) => {};
+  const handleChangeStatusRecord = async (_id: string, status: string) => {
+    setLoading(true);
+    const options = {
+      url: "product/" + _id,
+      body: {
+        status,
+      },
+    };
+    await PUT(options)
+      .then((response) => {
+        if (response.message === "OK") {
+          getProductData();
+          message.success("Đã xóa sản phẩm!");
+        }
+      })
+      .catch(() => {
+        message.error("Có lỗi xảy ra. Vui lòng thử lại sau!");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const columns: ColumnsType<DataType> = [
     {
@@ -181,11 +201,38 @@ function Products() {
               <AiFillEdit />
             </Button>
           </Tooltip>
+          {record.status === "ACTIVE" ? (
+            <Popconfirm
+              title="Bạn chắc chắn muốn dừng bán sản phẩm?"
+              okText="Dừng"
+              cancelText="Hủy"
+              onConfirm={() => handleChangeStatusRecord(record._id, "STOP")}
+            >
+              <Tooltip title="Dừng bán sản phẩm">
+                <Button>
+                  <FaRegStopCircle />
+                </Button>
+              </Tooltip>
+            </Popconfirm>
+          ) : (
+            <Popconfirm
+              title="Bạn muốn bán lại sản phẩm?"
+              okText="Xác nhận"
+              cancelText="Hủy"
+              onConfirm={() => handleChangeStatusRecord(record._id, "ACTIVE")}
+            >
+              <Tooltip title="Dừng bán sản phẩm">
+                <Button>
+                  <FaRegStopCircle />
+                </Button>
+              </Tooltip>
+            </Popconfirm>
+          )}
           <Popconfirm
             title="Bạn chắc chắn muốn xóa sản phẩm?"
             okText="Xóa"
             cancelText="Hủy"
-            onConfirm={() => handleDeleteRecord(record._id)}
+            onConfirm={() => handleChangeStatusRecord(record._id, "DELETED")}
           >
             <Tooltip title="Xóa sản phẩm">
               <Button>
@@ -200,7 +247,9 @@ function Products() {
   const content = (
     <Col>
       <Row className="mb-5 flex-nowrap" justify="space-around">
-        <Typography.Title className="whitespace-nowrap" level={5}>Tìm kiếm</Typography.Title>
+        <Typography.Title className="whitespace-nowrap" level={5}>
+          Tìm kiếm
+        </Typography.Title>
         <Form className="w-full">
           <Row justify="space-around" className="w-full">
             <Form.Item name="type" className="max-w-[300px] w-full">

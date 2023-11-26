@@ -210,7 +210,7 @@ function Header() {
               </div>
             )}
           </div>
-          {user && user.rules == "ADMIN" && (
+          {user && user.role == "ADMIN" && (
             <Link to="/admin">
               <div className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer">
                 <MdDashboard />
