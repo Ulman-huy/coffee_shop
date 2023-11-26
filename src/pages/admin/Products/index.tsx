@@ -16,7 +16,7 @@ import {
 } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useEffect, useState, useId } from "react";
-import { DELETE, GET, PUT } from "../../../service";
+import { GET, PUT } from "../../../service";
 import { IoIosImages } from "react-icons/io";
 import ViewImage from "./components/ViewImage";
 import dayjs from "dayjs";
@@ -43,6 +43,7 @@ export type DataType = {
 
 function Products() {
   const key = useId();
+  const [form] = Form.useForm();
   const [tableData, setTableData] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [_totalPage, setTotalPage] = useState<number>();
@@ -100,6 +101,10 @@ function Products() {
         setLoading(false);
       });
   };
+
+  const onSearch = async (values: any) => {
+
+  }
 
   const columns: ColumnsType<DataType> = [
     {
@@ -250,7 +255,7 @@ function Products() {
         <Typography.Title className="whitespace-nowrap" level={5}>
           Tìm kiếm
         </Typography.Title>
-        <Form className="w-full">
+        <Form form={form} onFinish={onSearch} className="w-full">
           <Row justify="space-around" className="w-full">
             <Form.Item name="type" className="max-w-[300px] w-full">
               <Select
@@ -276,7 +281,12 @@ function Products() {
             </Form.Item>
           </Row>
           <Row justify="end">
-            <Button type="primary" className="bg-yellow">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="bg-yellow"
+              loading={loading}
+            >
               Tìm kiếm
             </Button>
           </Row>
