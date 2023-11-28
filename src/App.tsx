@@ -12,7 +12,7 @@ import HeaderOnly from "./layouts/HeaderOnly";
 import Login from "./pages/Authentication/Login";
 import Callback from "./pages/Callback";
 import { GlobalContext } from "./context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import loadingLottie from "./assets/lottie/loading.json";
 import Store from "./pages/Store";
@@ -24,6 +24,8 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
 import CreateProduct from "./pages/admin/Products/CreateProduct";
+import ProductDetail from "./pages/Product/ProductDetail";
+import { GET } from "./service";
 
 export const routers: any = [
   {
@@ -36,6 +38,10 @@ export const routers: any = [
       {
         path: "/products",
         element: <Product />,
+      },
+      {
+        path: "/products/:_id/:slug",
+        element: <ProductDetail />,
       },
       {
         path: "/store",
@@ -98,9 +104,26 @@ export const routers: any = [
 const router = createBrowserRouter(routers);
 
 function App() {
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const context = { loading, setLoading };
+  const [isGetUp, setIsGetUp] = useState(false);
+
+  const getUp = async () => {
+    const options = {
+      url: "get-up",
+    };
+    await GET(options).finally(() => setIsGetUp(!isGetUp));
+  };
+
+  const getUpToServer = () => {
+    setInterval(() => {
+      getUp();
+    }, 300000);
+  };
+
+  useEffect(() => {
+    getUpToServer();
+  }, [isGetUp]);
 
   return (
     <GlobalContext.Provider value={context}>

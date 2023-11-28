@@ -9,6 +9,7 @@ export default {
         black: "rgb(18, 18, 18)",
         error: "#ff4d4f",
         "yellow-10": "rgba(255, 186, 48, 0.1);",
+        grey: "#1b1b1b",
       },
       backgroundColor: {
         grey: "#1b1b1b",

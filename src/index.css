@@ -163,3 +163,11 @@ input {
 .ant-popconfirm-buttons button:last-child {
   background-color: #f88630;
 }
+.container__modal--preview .ant-modal-content {
+  background: var(--grey-background);
+  color: var(--white-color);
+}
+.scroll__h-5::-webkit-scrollbar {
+  width: 0;
+  height: 5px;
+}

@@ -107,7 +107,7 @@ function CreateProduct() {
             />
           </Form.Item>
           <Form.Item
-            name="sales"
+            name="sale"
             label="Giảm giá (%)"
             rules={[{ required: true, message: "Nhập % giảm giá!" }]}
           >
