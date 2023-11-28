@@ -46,7 +46,6 @@ function EditProduct({ product, open, onClose }: Props) {
 
     await POST(options)
       .then((response) => {
-        console.log({ response });
         if (response.message == "OK") {
           form.resetFields();
           toast.success("Thêm sản phẩm thành công!");

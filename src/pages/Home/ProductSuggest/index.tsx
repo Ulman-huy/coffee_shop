@@ -20,7 +20,6 @@ function ProductSuggest() {
   const [tabActive, setTabActive] = useState("ALL");
   const [productPreview, setProductPreview] = useState<ProductType>();
   const [visible, setVisible] = useState(false);
-  console.log({ productPreview });
 
   const getProduct = async () => {
     const options = {

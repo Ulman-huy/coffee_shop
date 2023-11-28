@@ -102,9 +102,7 @@ function Products() {
       });
   };
 
-  const onSearch = async (values: any) => {
-
-  }
+  const onSearch = async (_values: any) => {};
 
   const columns: ColumnsType<DataType> = [
     {
