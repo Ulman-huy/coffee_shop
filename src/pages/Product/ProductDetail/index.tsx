@@ -5,15 +5,57 @@ import { IoHeartOutline } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { ProductType } from "../../../types";
 import { renderStar } from "../../../utils";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { GET } from "../../../service";
 import { GlobalContext } from "../../../context";
+
+const stars = [
+  {
+    value: 0,
+    title: "Tất cả",
+  },
+  {
+    value: 5,
+    title: "5 sao",
+  },
+  {
+    value: 4,
+    title: "4 sao",
+  },
+  {
+    value: 3,
+    title: "3 sao",
+  },
+  {
+    value: 2,
+    title: "2 sao",
+  },
+  {
+    value: 1,
+    title: "1 sao",
+  },
+];
 
 function ProductDetail() {
   const { _id } = useParams();
   const { loading, setLoading }: any = useContext(GlobalContext);
   const [src, setSrc] = useState<string>();
   const [product, setProduct] = useState<ProductType>();
+  const [productSuggest, setProductSuggest] = useState<ProductType[]>([]);
+
+  const getProductSuggest = async (type: string) => {
+    const options = {
+      url: "product/all?type=" + type + "&limit=5",
+    };
+    await GET(options).then((response) => {
+      if (response) {
+        const products = response.data.filter(
+          (item: ProductType) => item._id != _id
+        );
+        setProductSuggest(products);
+      }
+    });
+  };
 
   const getProduct = async () => {
     setLoading(true);
@@ -21,10 +63,11 @@ function ProductDetail() {
       url: "product/" + _id,
     };
     await GET(options)
-      .then((response) => {
+      .then(async (response) => {
         if (response) {
           setProduct(response.data);
           setSrc(response.data.images.split(",")[0]);
+          await getProductSuggest(response.data.type);
         }
       })
       .finally(() => {
@@ -34,7 +77,7 @@ function ProductDetail() {
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [_id]);
 
   return (
     <div className="flex justify-center min-h-[50vh]">
@@ -129,6 +172,43 @@ function ProductDetail() {
             </div>
             <div className="rounded-lg bg-grey max-w-[350px] w-full flex-shrink-0 p-6">
               <h3 className="text-lg font-semibold">Sản phẩm liên quan</h3>
+              {productSuggest.map((product: ProductType) => (
+                <Link
+                  to={`/products/${product._id}/${product.slug}`}
+                  key={product._id}
+                >
+                  <div className="mt-3 flex gap-2 group">
+                    <img
+                      src={product.images.split(",")[0]}
+                      className="w-[80px] aspect-square object-cover rounded-md"
+                      alt=""
+                    />
+                    <div>
+                      <h4 className="line-clamp-2 leading-[17px] group-hover:text-primary transition-colors">
+                        {product.name}
+                      </h4>
+                      <div className="h-[16px] text-[14px]">
+                        {renderStar(product.star, 14)}
+                      </div>
+                      <p className="mt-3 leading-[1]">
+                        {Intl.NumberFormat().format(product.price)} ₫
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 bg-grey p-6 rounded-lg">
+            <h2 className="text-[22px] font-semibold mb-2">
+              Đánh giá sản phẩm
+            </h2>
+            <div className="flex gap-3">
+              {stars.map((star: { value: number; title: string }) => (
+                <Button key={star.value} className="text-yellow border-yellow">
+                  {star.title}
+                </Button>
+              ))}
             </div>
           </div>
         </div>

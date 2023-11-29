@@ -8,7 +8,7 @@ const validateEmail = (email: string) => {
     );
 };
 
-const renderStar = (star: number) => {
+const renderStar = (star: number, size?: number) => {
   const stars = [];
 
   for (let i = 0; i < star; i++) {
@@ -21,7 +21,7 @@ const renderStar = (star: number) => {
   return (
     <div className="inline-flex mt-2 text-xl gap-1 text-yellow cursor-pointer">
       {stars.map((item: any, index: number) => (
-        <span key={index}>{item}</span>
+        <span key={index} className={`text-[${size}px]`}>{item}</span>
       ))}
     </div>
   );
