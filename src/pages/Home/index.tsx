@@ -1,6 +1,5 @@
 import News from "./News";
 import Advantages from "./Advantages";
-import Category from "./Category";
 import ProductSuggest from "./ProductSuggest";
 import Reviews from "./Reviews";
 import Slider from "./Slider";
@@ -12,7 +11,6 @@ function Home() {
       <Slider />
       <Trademark />
       <Advantages />
-      <Category />
       <ProductSuggest />
       <Reviews />
       <News />
