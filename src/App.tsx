@@ -26,6 +26,8 @@ import Products from "./pages/admin/Products";
 import CreateProduct from "./pages/admin/Products/CreateProduct";
 import ProductDetail from "./pages/Product/ProductDetail";
 import { GET } from "./service";
+import ProductPreview from "./components/ProductPreview";
+import { ProductType } from "./types";
 
 export const routers: any = [
   {
@@ -105,8 +107,9 @@ const router = createBrowserRouter(routers);
 
 function App() {
   const [loading, setLoading] = useState<boolean>(false);
-  const context = { loading, setLoading };
+  const [isPreview, setIsPreview] = useState(false);
   const [isGetUp, setIsGetUp] = useState(false);
+  const [productPreview, setProductPreview] = useState<ProductType>();
 
   const getUp = async () => {
     const options = {
@@ -125,6 +128,20 @@ function App() {
     getUpToServer();
   }, [isGetUp]);
 
+  const context = {
+    loading,
+    setLoading,
+    isPreview,
+    setIsPreview,
+    setProductPreview,
+  };
+
+  useEffect(() => {
+    if (!isPreview) {
+      setProductPreview(undefined);
+    }
+  }, [isPreview]);
+
   return (
     <GlobalContext.Provider value={context}>
       {loading && (
@@ -135,6 +152,11 @@ function App() {
         </div>
       )}
       <RouterProvider router={router} />
+      <ProductPreview
+        visible={isPreview}
+        setVisible={setIsPreview}
+        product={productPreview}
+      />
     </GlobalContext.Provider>
   );
 }

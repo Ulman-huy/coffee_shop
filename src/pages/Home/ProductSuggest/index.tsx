@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { bg2 } from "../../../assets/images";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { GET } from "../../../service";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { ProductType } from "../../../types";
 import ProductItem from "../../../components/ProductItem";
-import ProductPreview from "../../../components/ProductPreview";
+import { GlobalContext } from "../../../context";
 
 const tabs = [
   { value: "ALL", title: "Tất cả" },
@@ -18,8 +18,7 @@ const tabs = [
 function ProductSuggest() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [tabActive, setTabActive] = useState("ALL");
-  const [productPreview, setProductPreview] = useState<ProductType>();
-  const [visible, setVisible] = useState(false);
+  const { setProductPreview, setIsPreview }: any = useContext(GlobalContext);
 
   const getProduct = async () => {
     const options = {
@@ -39,11 +38,6 @@ function ProductSuggest() {
     getProduct();
   }, [tabActive]);
 
-  useEffect(() => {
-    if (!visible) {
-      setProductPreview(undefined);
-    }
-  }, [visible]);
   return (
     <div
       className="flex justify-center items-center bg-no-repeat bg-contain bg-grey bg-center"
@@ -80,12 +74,12 @@ function ProductSuggest() {
             className="h-full"
           >
             {products.map((product: ProductType) => (
-              <SwiperSlide>
+              <SwiperSlide key={product._id}>
                 <ProductItem
                   preview
                   product={product}
                   setProductPreview={setProductPreview}
-                  setVisible={setVisible}
+                  setVisible={setIsPreview}
                 />
               </SwiperSlide>
             ))}
@@ -100,11 +94,6 @@ function ProductSuggest() {
           </Link>
         </div>
       </div>
-      <ProductPreview
-        product={productPreview}
-        visible={visible}
-        setVisible={setVisible}
-      />
     </div>
   );
 }

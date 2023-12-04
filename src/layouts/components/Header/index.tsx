@@ -70,7 +70,7 @@ function Header() {
   };
 
   return (
-    <header className="z-[5] fixed top-0 h-[80px] w-full flex justify-center bg-header">
+    <header className="z-[99999] fixed top-0 h-[80px] w-full flex justify-center bg-header">
       <div className="max-w-default w-full flex justify-between items-center">
         <div className="font-pacifico text-[30px] cursor-pointer">
           <Link to="/" className="m-0 py-3 text-white">

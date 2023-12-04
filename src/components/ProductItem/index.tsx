@@ -39,7 +39,7 @@ function ProductItem({
         </Button>
       )}
       <Link
-        to={`products/${product._id}/${product.slug}`}
+        to={`/products/${product._id}/${product.slug}`}
         className="w-full block rounded-xl overflow-hidden aspect-square"
       >
         <img
@@ -48,7 +48,7 @@ function ProductItem({
           alt=""
         />
       </Link>
-      <Link to={`products/${product._id}/${product.slug}`}>
+      <Link to={`/products/${product._id}/${product.slug}`}>
         <h4 className="mt-2 line-clamp-2 leading-[20px]">{product.name}</h4>
       </Link>
       <div className="flex items-center justify-between mt-4">
