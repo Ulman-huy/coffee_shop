@@ -58,10 +58,13 @@ function ProductItem({
       <h4>
         {product.sale != 0 && (
           <del className="text-[15px]">
-            {Intl.NumberFormat().format((product.price / product.sale) * 100)} ₫
+            {Intl.NumberFormat().format(
+              product.price + (product.price * product.sale) / 100
+            )}{" "}
+            ₫
           </del>
         )}
-        <span className="text-[20px] text-primary font-semibold">
+        <span className="text-[20px] ms-2 text-primary font-semibold">
           {Intl.NumberFormat().format(product.price)} ₫
         </span>
       </h4>

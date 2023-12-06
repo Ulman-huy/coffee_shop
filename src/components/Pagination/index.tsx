@@ -20,7 +20,7 @@ function Pagination({ totalPage, page, setPage, elementPerPage }: IPagination) {
           <MdArrowBackIos />
         </span>
       </div>
-      {Array(Math.ceil(totalPage / elementPerPage))
+      {Array(totalPage)
         .fill(0)
         .map((_: any, index: number) => (
           <div
@@ -37,7 +37,7 @@ function Pagination({ totalPage, page, setPage, elementPerPage }: IPagination) {
 
       <div
         className={`w-[40px] h-[40px] flex items-center cursor-pointer justify-center border border-yellow rounded-md hover:bg-[#ff886315] ${
-          page == Math.ceil(totalPage / elementPerPage) &&
+          page == totalPage &&
           "cursor-default hover:bg-transparent pointer-events-none"
         }`}
         onClick={() => setPage(page + 1)}

@@ -16,11 +16,15 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { POST } from "../../../service";
 import { toast } from "react-toastify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function CreateProduct() {
   const [form] = Form.useForm();
   const [listImage, setListImage] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [description, setDescription] = useState("");
+  const [info, setInfo] = useState("");
 
   const onFinish = async (values: any) => {
     const images = listImage.map((img: any) => img.response.url).join(",");
@@ -30,6 +34,8 @@ function CreateProduct() {
       price: Number(values.price),
       date: dayjs(values.date),
       images: images,
+      description,
+      info,
     };
     const options = {
       url: "product/create",
@@ -42,6 +48,8 @@ function CreateProduct() {
         if (response.message == "OK") {
           form.resetFields();
           toast.success("Thêm sản phẩm thành công!");
+          setDescription("");
+          setInfo("");
         }
       })
       .catch(() => {
@@ -103,13 +111,10 @@ function CreateProduct() {
             <DatePicker
               placeholder="Chọn ngày hết hạn!"
               className="min-w-[50%]"
+              format={"DD-MM-YYYY"}
             />
           </Form.Item>
-          <Form.Item
-            name="sale"
-            label="Giảm giá (%)"
-            rules={[{ required: true, message: "Nhập % giảm giá!" }]}
-          >
+          <Form.Item name="sale" label="Giảm giá (%)">
             <InputNumber
               max={60}
               className="w-full"
@@ -117,20 +122,30 @@ function CreateProduct() {
               placeholder="Nhập % giảm giá!"
             />
           </Form.Item>
-          <Form.Item name="info" label="Thông tin sản phẩm">
-            <Input.TextArea placeholder="Nhập thông tin sản phẩm" rows={5} />
-          </Form.Item>
+          <p className="py-2">Thông tin sản phẩm</p>
+          <ReactQuill
+            theme="snow"
+            value={info}
+            className="h-[200px]"
+            onChange={setInfo}
+          />
         </Col>
         <Col className="flex-1">
-          <Form.Item name="description" label="Mô tả thông tin liên quan">
-            <Input.TextArea placeholder="Nhập các thông tin khác" rows={18} />
-          </Form.Item>
+          <p className="py-2">Mô tả thông tin liên quan</p>
+          <ReactQuill
+            theme="snow"
+            value={description}
+            className="h-[550px]"
+            onChange={setDescription}
+          />
+          <br />
+          <br />
           <Form.Item name="images" label="Hình ảnh sản phẩm">
             <UploadImage setListImage={setListImage} />
           </Form.Item>
         </Col>
       </Row>
-      <Row justify="space-between">
+      <Row justify="space-between" className="mt-5">
         <Button icon={<RedoOutlined />} onClick={() => form.resetFields()}>
           Nhập lại
         </Button>

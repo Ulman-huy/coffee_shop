@@ -66,11 +66,12 @@ function ProductPreview({ product, visible, setVisible }: Props) {
                 </>
               )}
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               {product?.sale != 0 && (
-                <del>
+                <del className="text-[22px]">
                   {Intl.NumberFormat().format(
-                    ((product?.price ?? 0) / (product?.sale ?? 0)) * 100 ?? 0
+                    (product?.price ?? 0) +
+                      ((product?.price ?? 0) * (product?.sale ?? 0)) / 100 ?? 0
                   )}{" "}
                   ₫
                 </del>
@@ -87,6 +88,7 @@ function ProductPreview({ product, visible, setVisible }: Props) {
                 Công dụng:{" "}
                 <span
                   dangerouslySetInnerHTML={{ __html: product?.info ?? "" }}
+                  className="wrap__html"
                 />
               </h3>
             </div>
@@ -110,6 +112,7 @@ function ProductPreview({ product, visible, setVisible }: Props) {
         <div className="mt-6">
           <h2 className="text-[24px] font-semibold mb-2">Thông tin chi tiết</h2>
           <div
+            className="wrap__html"
             dangerouslySetInnerHTML={{ __html: product?.description ?? "" }}
           />
         </div>

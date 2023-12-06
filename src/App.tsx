@@ -28,6 +28,9 @@ import ProductDetail from "./pages/Product/ProductDetail";
 import { GET } from "./service";
 import ProductPreview from "./components/ProductPreview";
 import { ProductType } from "./types";
+import Cart from "./pages/Cart";
+import { ConfigProvider } from "antd";
+import vi_VN from "antd/locale/vi_VN";
 
 export const routers: any = [
   {
@@ -48,6 +51,10 @@ export const routers: any = [
       {
         path: "/store",
         element: <Store />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/discover",
@@ -144,19 +151,24 @@ function App() {
 
   return (
     <GlobalContext.Provider value={context}>
-      {loading && (
-        <div className="fixed z-10 top-0 flex items-center justify-center h-screen bg-[#11111150] pointer-events-none">
-          <div className="w-[25%]">
-            <Lottie animationData={loadingLottie} loop />
+      <ConfigProvider
+        locale={vi_VN}
+        theme={{ token: { colorPrimary: "#f88630" } }}
+      >
+        {loading && (
+          <div className="fixed z-10 top-0 flex items-center justify-center h-screen bg-[#11111150] pointer-events-none">
+            <div className="w-[25%]">
+              <Lottie animationData={loadingLottie} loop />
+            </div>
           </div>
-        </div>
-      )}
-      <RouterProvider router={router} />
-      <ProductPreview
-        visible={isPreview}
-        setVisible={setIsPreview}
-        product={productPreview}
-      />
+        )}
+        <RouterProvider router={router} />
+        <ProductPreview
+          visible={isPreview}
+          setVisible={setIsPreview}
+          product={productPreview}
+        />
+      </ConfigProvider>
     </GlobalContext.Provider>
   );
 }

@@ -116,15 +116,17 @@ function ProductDetail() {
                 {!!product?.like && (
                   <>
                     <span>•</span>
-                    <span>{product?.like} lượt thích</span>
+                    <span>{product?.like.length} lượt thích</span>
                   </>
                 )}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-center">
                 {product?.sale != 0 && (
-                  <del>
+                  <del className="relative text-[22px]">
                     {Intl.NumberFormat().format(
-                      ((product?.price ?? 0) / (product?.sale ?? 0)) * 100 ?? 0
+                      (product?.price ?? 0) +
+                        ((product?.price ?? 0) * (product?.sale ?? 1)) / 100 ??
+                        0
                     )}{" "}
                     ₫
                   </del>
@@ -140,7 +142,10 @@ function ProductDetail() {
                 <h3>
                   Công dụng:{" "}
                   <span
-                    dangerouslySetInnerHTML={{ __html: product?.info ?? "" }}
+                    className="wrap__html"
+                    dangerouslySetInnerHTML={{
+                      __html: product?.info ?? "",
+                    }}
                   />
                 </h3>
               </div>
@@ -167,7 +172,10 @@ function ProductDetail() {
                 Thông tin chi tiết
               </h2>
               <div
-                dangerouslySetInnerHTML={{ __html: product?.description ?? "" }}
+                dangerouslySetInnerHTML={{
+                  __html: product?.description ?? "",
+                }}
+                className="wrap__html"
               />
             </div>
             <div className="rounded-lg bg-grey max-w-[350px] w-full flex-shrink-0 p-6">

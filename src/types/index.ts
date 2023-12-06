@@ -6,7 +6,7 @@ export type ProductType = {
   description: string;
   images: string;
   info: string;
-  like: number;
+  like: Array<String>;
   name: string;
   price: number;
   sale: number;

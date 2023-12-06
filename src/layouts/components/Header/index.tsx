@@ -12,7 +12,6 @@ import { useState } from "react";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDashboard, MdOutlineLogout } from "react-icons/md";
-import { cart_empty } from "../../../assets/images";
 import { toast } from "react-toastify";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../main";
@@ -56,11 +55,6 @@ function Header() {
   const user = useSelector((state: any) => state.user.data);
   const [active, setActive] = useState("/");
   const { ref, show, setShow } = useOutsideClick();
-  const {
-    ref: cartRef,
-    show: showCart,
-    setShow: setShowCart,
-  } = useOutsideClick();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -99,49 +93,12 @@ function Header() {
           >
             <FaHeart />
           </Link>
-          <div className="relative" ref={cartRef}>
-            <Link
-              to="/cart"
-              onMouseEnter={() => setShowCart(true)}
-              className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
-            >
-              <FaShoppingCart />
-            </Link>
-            {showCart && (
-              <div className="bg-white py-4 rounded-[5px] absolute top-[50px] min-w-[365px] right-0">
-                <div className="">
-                  {user && !user.cart.length && (
-                    <div className="flex flex-col items-center">
-                      <img
-                        src={cart_empty}
-                        alt=""
-                        className="w-[80px] h-[80px]"
-                      />
-                      <p className="text-black mt-3 text-[15px] font-semibold">
-                        Chưa có sản phẩm
-                      </p>
-                    </div>
-                  )}
-                  {/* {!isEmpty &&
-                  cart.map((item, index) => (
-                    <CartItem key={index} data={item} />
-                  ))} */}
-                </div>
-                {/* {!isEmpty ? (
-                <div className={cx("cart-footer")}>
-                  <p className={cx("count-item")}>
-                    {cart.length} sản phẩm trong giỏ hàng
-                  </p>
-                  <Link to="/cart" className={cx("button")}>
-                    Xem giỏ hàng
-                  </Link>
-                </div>
-              ) : (
-                ""
-              )} */}
-              </div>
-            )}
-          </div>
+          <Link
+            to="/cart"
+            className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
+          >
+            <FaShoppingCart />
+          </Link>
           <div
             ref={ref}
             className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
@@ -218,13 +175,6 @@ function Header() {
             </Link>
           )}
         </div>
-        {/* <div className="fixed z-[9999] bg-black border-l border-primary w-[80%] shadow-md translate-x-[100%] opacity-0 transition-all">
-          {navbar.map((nav, index) => (
-            <NavLink key={index} to={nav.to}>
-              {nav.title}
-            </NavLink>
-          ))}
-        </div> */}
       </div>
     </header>
   );
