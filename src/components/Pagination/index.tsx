@@ -4,10 +4,9 @@ interface IPagination {
   totalPage: number;
   page: number;
   setPage: (page: number) => void;
-  elementPerPage: number;
 }
 
-function Pagination({ totalPage, page, setPage, elementPerPage }: IPagination) {
+function Pagination({ totalPage, page, setPage }: IPagination) {
   return (
     <div className="flex items-center gap-1">
       <div

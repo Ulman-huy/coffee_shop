@@ -308,7 +308,6 @@ function Product() {
                     totalPage={totalPage}
                     page={page}
                     setPage={setPage}
-                    elementPerPage={9}
                   />
                 </div>
               </>
