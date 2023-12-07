@@ -8,13 +8,14 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { FaArrowRightToBracket, FaTruckFast } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDashboard, MdOutlineLogout } from "react-icons/md";
 import { toast } from "react-toastify";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../main";
+import { initCart } from "../../../redux/reducer/cartReducer";
 
 const navbar = [
   {
@@ -52,6 +53,7 @@ const userTools = [
 ];
 
 function Header() {
+  const cart = useSelector((state: any) => state.cart.cart);
   const user = useSelector((state: any) => state.user.data);
   const [active, setActive] = useState("/");
   const { ref, show, setShow } = useOutsideClick();
@@ -62,6 +64,12 @@ function Header() {
     signOut(auth);
     toast.success("Đã đăng xuất tài khoản!");
   };
+
+  useEffect(() => {
+    if (user) {
+      dispatch(initCart(user.cart));
+    }
+  }, [user]);
 
   return (
     <header className="z-[99999] fixed top-0 h-[80px] w-full flex justify-center bg-header">
@@ -93,11 +101,15 @@ function Header() {
           >
             <FaHeart />
           </Link>
-          <Link
-            to="/cart"
-            className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
-          >
-            <FaShoppingCart />
+          <Link to="/cart" className="relative">
+            <div className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer">
+              <FaShoppingCart />
+            </div>
+            {!!cart.length && (
+              <span className="absolute bg-primary flex items-center text-[14px] font-bold top-0 right-0 justify-center w-[20px] h-[20px] rounded-full ">
+                {cart.length}
+              </span>
+            )}
           </Link>
           <div
             ref={ref}

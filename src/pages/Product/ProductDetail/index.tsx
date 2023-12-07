@@ -1,4 +1,4 @@
-import { Button, Image } from "antd";
+import { Button, Image, message } from "antd";
 import { useState, useEffect, useContext } from "react";
 import dayjs from "dayjs";
 import { IoHeartOutline } from "react-icons/io5";
@@ -6,8 +6,12 @@ import { FaCartShopping } from "react-icons/fa6";
 import { ProductType } from "../../../types";
 import { renderStar } from "../../../utils";
 import { Link, useParams } from "react-router-dom";
-import { GET } from "../../../service";
+import { GET, POST } from "../../../service";
 import { GlobalContext } from "../../../context";
+import { useDispatch } from "react-redux";
+import { addCart } from "../../../redux/reducer/cartReducer";
+import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
+import { toast } from "react-toastify";
 
 const stars = [
   {
@@ -42,7 +46,10 @@ function ProductDetail() {
   const [src, setSrc] = useState<string>();
   const [product, setProduct] = useState<ProductType>();
   const [productSuggest, setProductSuggest] = useState<ProductType[]>([]);
+  const [quantity, setQuantity] = useState(1);
+  const [loadingAddCart, setLoadingAddCart] = useState(true);
 
+  const dispatch = useDispatch();
   const getProductSuggest = async (type: string) => {
     const options = {
       url: "product/all?type=" + type + "&limit=5",
@@ -75,8 +82,32 @@ function ProductDetail() {
       });
   };
 
+  const handleAddToCart = async (_id: string) => {
+    setLoadingAddCart(true);
+    const options = {
+      url: "product/add-product",
+      body: {
+        _id: _id,
+        type: "PLUS",
+        quantity: quantity,
+      },
+    };
+    await POST(options)
+      .then((response) => {
+        if (response.message == "OK") {
+          dispatch(addCart({ product_id: _id, quantity: quantity }));
+          toast.success("Đã thêm sảm phẩm vào giỏ hàng!")
+        }
+      })
+      .finally(() => {
+        setLoadingAddCart(false);
+      });
+  };
+
   useEffect(() => {
     getProduct();
+    setQuantity(1);
+    setLoadingAddCart(false);
   }, [_id]);
 
   return (
@@ -139,15 +170,42 @@ function ProductDetail() {
                 Hạn sử dụng: {dayjs(product?.createdAt).format("DD/MM/YYYY")}
               </h3>
               <div className="mt-2">
-                <h3>
-                  Công dụng:{" "}
-                  <span
-                    className="wrap__html"
-                    dangerouslySetInnerHTML={{
-                      __html: product?.info ?? "",
-                    }}
-                  />
-                </h3>
+                <h3>Công dụng: </h3>
+                <span
+                  className="wrap__html"
+                  dangerouslySetInnerHTML={{
+                    __html: product?.info ?? "",
+                  }}
+                />
+              </div>
+              <div className="inline-flex gap-2 mt-4 items-center p-1 border rounded-lg border-yellow">
+                <Button
+                  type="primary"
+                  className="text-[24px] bg-yellow w-[40px] h-[40px] flex items-center justify-center"
+                  onClick={() => {
+                    if (quantity == 1) {
+                      return;
+                    } else {
+                      setQuantity(quantity - 1);
+                    }
+                  }}
+                >
+                  <span>
+                    <HiOutlineMinusSm />
+                  </span>
+                </Button>
+                <div className="text-[24px] w-[40px] text-center">
+                  {quantity}
+                </div>
+                <Button
+                  type="primary"
+                  className="text-[24px] bg-yellow w-[40px] h-[40px] flex items-center justify-center"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  <span>
+                    <HiOutlinePlusSm />
+                  </span>
+                </Button>
               </div>
               <div className="flex gap-3 mt-6">
                 <Button
@@ -160,6 +218,8 @@ function ProductDetail() {
                   type="primary"
                   className="w-full bg-yellow flex items-center justify-center"
                   icon={<FaCartShopping />}
+                  onClick={() => handleAddToCart(_id ?? "")}
+                  loading={loadingAddCart}
                 >
                   Thêm vào giỏ hàng
                 </Button>
@@ -175,7 +235,7 @@ function ProductDetail() {
                 dangerouslySetInnerHTML={{
                   __html: product?.description ?? "",
                 }}
-                className="wrap__html"
+                className="wrap__html overflow-hidden"
               />
             </div>
             <div className="rounded-lg bg-grey max-w-[350px] w-full flex-shrink-0 p-6">

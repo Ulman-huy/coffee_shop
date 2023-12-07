@@ -5,6 +5,11 @@ import { renderStar } from "../../utils";
 import dayjs from "dayjs";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { addCart } from "../../redux/reducer/cartReducer";
+import { POST } from "../../service";
+import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
+import { toast } from "react-toastify";
 
 type Props = {
   product: ProductType | undefined;
@@ -14,10 +19,36 @@ type Props = {
 
 function ProductPreview({ product, visible, setVisible }: Props) {
   const [src, setSrc] = useState<string>();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = async (_id: string) => {
+    setLoading(true);
+    const options = {
+      url: "product/add-product",
+      body: {
+        _id: _id,
+        type: "PLUS",
+        quantity: quantity,
+      },
+    };
+    await POST(options)
+      .then((response) => {
+        if (response.message == "OK") {
+          dispatch(addCart({ product_id: _id, quantity: quantity }));
+          toast.success("Đã thêm sảm phẩm vào giỏ hàng!");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
     if (visible) {
       setSrc(product?.images.split(",")[0]);
+      setQuantity(1);
     }
   }, [visible]);
 
@@ -92,6 +123,33 @@ function ProductPreview({ product, visible, setVisible }: Props) {
                 />
               </h3>
             </div>
+            <div className="inline-flex gap-2 mt-4 items-center p-1 border rounded-lg border-yellow">
+              <Button
+                type="primary"
+                className="text-[24px] bg-yellow w-[40px] h-[40px] flex items-center justify-center"
+                onClick={() => {
+                  if (quantity == 1) {
+                    return;
+                  } else {
+                    setQuantity(quantity - 1);
+                  }
+                }}
+              >
+                <span>
+                  <HiOutlineMinusSm />
+                </span>
+              </Button>
+              <div className="text-[24px] w-[40px] text-center">{quantity}</div>
+              <Button
+                type="primary"
+                className="text-[24px] bg-yellow w-[40px] h-[40px] flex items-center justify-center"
+                onClick={() => setQuantity(quantity + 1)}
+              >
+                <span>
+                  <HiOutlinePlusSm />
+                </span>
+              </Button>
+            </div>
             <div className="flex gap-3 mt-6">
               <Button
                 size="large"
@@ -103,6 +161,8 @@ function ProductPreview({ product, visible, setVisible }: Props) {
                 type="primary"
                 className="w-full bg-yellow flex items-center justify-center"
                 icon={<FaCartShopping />}
+                onClick={() => handleAddToCart(product?._id ?? "")}
+                loading={loading}
               >
                 Thêm vào giỏ hàng
               </Button>

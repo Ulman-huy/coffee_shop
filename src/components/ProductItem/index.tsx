@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 import { renderStar } from "../../utils";
 import { useState } from "react";
 import { POST } from "../../service";
+import { useDispatch } from "react-redux";
+import { addCart } from "../../redux/reducer/cartReducer";
+import { toast } from "react-toastify";
 
 type Props = {
   product: ProductType;
@@ -22,6 +25,8 @@ function ProductItem({
   setProductPreview,
 }: Props) {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   const handleAddToCart = async () => {
     setLoading(true);
     const options = {
@@ -32,11 +37,16 @@ function ProductItem({
         quantity: 1,
       },
     };
-    await POST(options).then((response) => {
-      if(response) {
-        
-      }
-    });
+    await POST(options)
+      .then((response) => {
+        if (response.message == "OK") {
+          toast.success("Đã thêm sảm phẩm vào giỏ hàng!");
+          dispatch(addCart({ product_id: product._id, quantity: 1 }));
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (

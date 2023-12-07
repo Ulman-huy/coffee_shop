@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./reducer/userReducer";
 import { Cookies } from "react-cookie";
 import settingReducer from "./reducer/settingReducer";
+import cartReducer from "./reducer/cartReducer";
 
 const cookies = new Cookies();
 
@@ -14,6 +15,7 @@ const persistConfig = {
 };
 
 const appReducer = combineReducers({
+  cart: cartReducer,
   user: userReducer,
   setting: settingReducer,
 });
