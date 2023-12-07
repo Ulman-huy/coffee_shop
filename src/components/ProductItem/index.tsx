@@ -5,6 +5,8 @@ import { IoHeartOutline, IoEyeSharp } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { renderStar } from "../../utils";
+import { useState } from "react";
+import { POST } from "../../service";
 
 type Props = {
   product: ProductType;
@@ -19,6 +21,24 @@ function ProductItem({
   setVisible,
   setProductPreview,
 }: Props) {
+  const [loading, setLoading] = useState(false);
+  const handleAddToCart = async () => {
+    setLoading(true);
+    const options = {
+      url: "product/add-product",
+      body: {
+        _id: product._id,
+        type: "PLUS",
+        quantity: 1,
+      },
+    };
+    await POST(options).then((response) => {
+      if(response) {
+        
+      }
+    });
+  };
+
   return (
     <div className="w-full block h-full p-5 bg-black rounded-xl cursor-pointer group relative">
       {preview && (
@@ -75,7 +95,11 @@ function ProductItem({
             {/* <IoHeartSharp /> */}
           </span>
         </Button>
-        <Button className="w-full h-[40px] flex items-center justify-center text-[22px] text-yellow">
+        <Button
+          onClick={handleAddToCart}
+          className="w-full h-[40px] flex items-center justify-center text-[22px] text-yellow"
+          loading={loading}
+        >
           <FaCartShopping />
         </Button>
       </div>
