@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../main";
 import { initCart } from "../../../redux/reducer/cartReducer";
+import { useCookies } from "react-cookie";
+import { GET } from "../../../service";
 
 const navbar = [
   {
@@ -59,6 +61,7 @@ function Header() {
   const { ref, show, setShow } = useOutsideClick();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [cookies] = useCookies();
 
   const handleLogout = () => {
     dispatch({ type: "USER_LOGOUT" });
@@ -67,11 +70,25 @@ function Header() {
     toast.success("Đã đăng xuất tài khoản!");
   };
 
-  useEffect(() => {
-    if (user) {
-      dispatch(initCart(user.cart));
+  const getMe = async () => {
+    if (cookies.accessToken) {
+      const options = {
+        url: "user/me",
+        headers: {
+          Authorization: "Bearer " + cookies.accessToken,
+        },
+      };
+      await GET(options).then((response) => {
+        if (response) {
+          dispatch(initCart(response.cart));
+        }
+      });
     }
-  }, [user]);
+  };
+
+  useEffect(() => {
+    getMe();
+  }, []);
 
   return (
     <header className="z-[99999] fixed top-0 h-[80px] w-full flex justify-center bg-header">
