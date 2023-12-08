@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getMe } from "../../redux/reducer/userReducer";
 import { GlobalContext } from "../../context";
+import instanse from "../../config/axios";
 
 function Callback() {
   const { setLoading }: any = useContext(GlobalContext);
@@ -18,6 +19,12 @@ function Callback() {
     const redirect = searchParams.get("redirect");
     if (token) {
       setCookie("accessToken", token, { path: "/" });
+      instanse.interceptors.request.use((config) => {
+        if (token) {
+          config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+      });
       await dispatch(getMe(token) as any);
     }
     if (redirect) {

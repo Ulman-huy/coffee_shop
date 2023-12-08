@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   FaHeart,
   FaMoon,
@@ -58,9 +58,11 @@ function Header() {
   const [active, setActive] = useState("/");
   const { ref, show, setShow } = useOutsideClick();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch({ type: "USER_LOGOUT" });
+    navigate("/");
     signOut(auth);
     toast.success("Đã đăng xuất tài khoản!");
   };
@@ -94,23 +96,27 @@ function Header() {
           ))}
         </nav>
         <div className="flex">
-          <Link
-            to="/user/wishlist"
-            className="hover:text-primary transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
-            title="Sản phẩm yêu thích"
-          >
-            <FaHeart />
-          </Link>
-          <Link to="/cart" className="relative">
-            <div className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer">
-              <FaShoppingCart />
-            </div>
-            {!!cart.length && (
-              <span className="absolute bg-primary flex items-center text-[14px] font-bold top-0 right-0 justify-center w-[20px] h-[20px] rounded-full ">
-                {cart.length}
-              </span>
-            )}
-          </Link>
+          {user && (
+            <>
+              <Link
+                to="/user/wishlist"
+                className="hover:text-primary transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
+                title="Sản phẩm yêu thích"
+              >
+                <FaHeart />
+              </Link>
+              <Link to="/cart" className="relative">
+                <div className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer">
+                  <FaShoppingCart />
+                </div>
+                {!!cart.length && (
+                  <span className="absolute bg-primary flex items-center text-[14px] font-bold top-0 right-0 justify-center w-[20px] h-[20px] rounded-full ">
+                    {cart.length}
+                  </span>
+                )}
+              </Link>
+            </>
+          )}
           <div
             ref={ref}
             className="transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
