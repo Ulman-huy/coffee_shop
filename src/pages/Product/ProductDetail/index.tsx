@@ -13,32 +13,32 @@ import { addCart } from "../../../redux/reducer/cartReducer";
 import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
 import { toast } from "react-toastify";
 
-const stars = [
-  {
-    value: 0,
-    title: "Tất cả",
-  },
-  {
-    value: 5,
-    title: "5 sao",
-  },
-  {
-    value: 4,
-    title: "4 sao",
-  },
-  {
-    value: 3,
-    title: "3 sao",
-  },
-  {
-    value: 2,
-    title: "2 sao",
-  },
-  {
-    value: 1,
-    title: "1 sao",
-  },
-];
+// const stars = [
+//   {
+//     value: 0,
+//     title: "Tất cả",
+//   },
+//   {
+//     value: 5,
+//     title: "5 sao",
+//   },
+//   {
+//     value: 4,
+//     title: "4 sao",
+//   },
+//   {
+//     value: 3,
+//     title: "3 sao",
+//   },
+//   {
+//     value: 2,
+//     title: "2 sao",
+//   },
+//   {
+//     value: 1,
+//     title: "1 sao",
+//   },
+// ];
 
 function ProductDetail() {
   const { _id } = useParams();
@@ -267,7 +267,7 @@ function ProductDetail() {
               ))}
             </div>
           </div>
-          <div className="mt-6 bg-grey p-6 rounded-lg">
+          {/* <div className="mt-6 bg-grey p-6 rounded-lg">
             <h2 className="text-[22px] font-semibold mb-2">
               Đánh giá sản phẩm
             </h2>
@@ -278,7 +278,7 @@ function ProductDetail() {
                 </Button>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>
