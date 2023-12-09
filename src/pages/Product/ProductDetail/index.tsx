@@ -1,4 +1,4 @@
-import { Button, Image, message } from "antd";
+import { Button, Image } from "antd";
 import { useState, useEffect, useContext } from "react";
 import dayjs from "dayjs";
 import { IoHeartOutline } from "react-icons/io5";
@@ -96,7 +96,7 @@ function ProductDetail() {
       .then((response) => {
         if (response.message == "OK") {
           dispatch(addCart({ product_id: _id, quantity: quantity }));
-          toast.success("Đã thêm sảm phẩm vào giỏ hàng!")
+          toast.success("Đã thêm sảm phẩm vào giỏ hàng!");
         }
       })
       .finally(() => {

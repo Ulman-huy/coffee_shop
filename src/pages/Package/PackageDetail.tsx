@@ -1,17 +1,15 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { GET } from "../../service";
 import { useContext, useEffect, useState } from "react";
 import { PackageType } from "../../types";
 import { GlobalContext } from "../../context";
 import dayjs from "dayjs";
 import { Button, Space } from "antd";
-import { FaArrowRightLong } from "react-icons/fa6";
 
 function PackageDetail() {
   const { _id } = useParams();
   const [pkg, setPkg] = useState<PackageType | undefined>();
   const { setLoading }: any = useContext(GlobalContext);
-  const navigate = useNavigate();
   const getPackage = async () => {
     const options = {
       url: "order/package/" + _id,
