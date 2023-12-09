@@ -31,6 +31,9 @@ import { ProductType } from "./types";
 import Cart from "./pages/Cart";
 import { ConfigProvider } from "antd";
 import vi_VN from "antd/locale/vi_VN";
+import Package from "./pages/Package";
+import PackageDetail from "./pages/Package/PackageDetail";
+import Wishlist from "./pages/Wishlist";
 
 export const routers: any = [
   {
@@ -57,8 +60,20 @@ export const routers: any = [
         element: <Cart />,
       },
       {
+        path: "/wishlist",
+        element: <Wishlist />,
+      },
+      {
         path: "/discover",
         element: <Discover />,
+      },
+      {
+        path: "/package",
+        element: <Package />,
+      },
+      {
+        path: "/package/:_id",
+        element: <PackageDetail />,
       },
       {
         path: "/callback",

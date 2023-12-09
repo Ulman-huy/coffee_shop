@@ -69,6 +69,7 @@ function Cart() {
       phone: user.phone,
       location: user.location,
       message,
+      price: totalPrice,
       cart,
     };
 
@@ -82,7 +83,7 @@ function Cart() {
         if (response.message == "OK") {
           toast.success("Đã đặt đơn hàng thành công!");
           dispatch(initCart([]));
-          setCarts([])
+          setCarts([]);
         }
       })
       .finally(() => {
@@ -252,7 +253,10 @@ function Cart() {
 
   return (
     <>
-      <div className="flex justify-center mt-5">
+      <div
+        style={{ minHeight: "calc(100vh - 529px)" }}
+        className="flex justify-center mt-5"
+      >
         <div className="flex gap-8 max-w-default w-full items-start">
           <div className="rounded-lg flex-1">
             <h3 className="text-[22px] font-semibold">

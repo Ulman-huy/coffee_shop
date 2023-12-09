@@ -1,15 +1,15 @@
 import { ProductType } from "../../types";
-// import { IoHeartSharp } from "react-icons/io5";
 import { Button } from "antd";
-import { IoHeartOutline, IoEyeSharp } from "react-icons/io5";
+import { IoHeartOutline, IoEyeSharp, IoHeartSharp } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { renderStar } from "../../utils";
 import { useState } from "react";
 import { POST } from "../../service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "../../redux/reducer/cartReducer";
 import { toast } from "react-toastify";
+import { dislikeProduct, likeProduct } from "../../redux/reducer/userReducer";
 
 type Props = {
   product: ProductType;
@@ -26,6 +26,7 @@ function ProductItem({
 }: Props) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user.data);
 
   const handleAddToCart = async () => {
     setLoading(true);
@@ -48,6 +49,36 @@ function ProductItem({
         setLoading(false);
       });
   };
+
+  const handleLikeProduct = async () => {
+    let type = "";
+
+    if (user?.like.includes(product._id)) {
+      type = "DISLIKE";
+    } else {
+      type = "LIKE";
+    }
+
+    const options = {
+      url: "product/like",
+      body: {
+        type,
+        _id: product._id,
+      },
+    };
+    await POST(options).then((response) => {
+      if (response.message == "OK") {
+        if (type == "LIKE") {
+          dispatch(likeProduct({ _id: product._id }));
+          toast.success("Đã thêm sản phẩm vào danh sách yêu thích");
+        } else {
+          dispatch(dislikeProduct({ _id: product._id }));
+          toast.success("Đã bỏ sản phẩm khỏi danh sách yêu thích");
+        }
+      }
+    });
+  };
+  console.log({ user });
 
   return (
     <div className="w-full block h-full p-5 bg-black rounded-xl cursor-pointer group relative">
@@ -99,10 +130,18 @@ function ProductItem({
         </span>
       </h4>
       <div className="flex justify-between gap-4 mt-2">
-        <Button className="w-[44px] h-[40px] text-yellow text-[22px] flex justify-center items-center">
+        <Button
+          onClick={handleLikeProduct}
+          className={`w-[44px] h-[40px] text-yellow text-[22px] flex justify-center items-center ${
+            user?.like.includes(product._id) && "border-yellow"
+          }`}
+        >
           <span>
-            <IoHeartOutline />
-            {/* <IoHeartSharp /> */}
+            {user?.like.includes(product._id) ? (
+              <IoHeartSharp />
+            ) : (
+              <IoHeartOutline />
+            )}
           </span>
         </Button>
         <Button

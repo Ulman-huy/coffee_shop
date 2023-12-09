@@ -34,3 +34,21 @@ export type CartType = {
   status: string;
   type: string;
 };
+
+export type PackageType = {
+  _id: string;
+  userId: string;
+  name: string;
+  phone: string;
+  location: string;
+  message: string;
+  status: string;
+  price: number;
+  createdAt: string;
+  cart: [
+    {
+      product_id: ProductType;
+      quantity: number;
+    }
+  ];
+};

@@ -10,6 +10,14 @@ export const userReducer = createSlice({
     setUser: (state, action) => {
       state.data = action.payload;
     },
+    likeProduct: (state: any, action) => {
+      state.data.like.push(action.payload._id);
+    },
+    dislikeProduct: (state: any, action) => {
+      state.data.like = state.data.like.filter(
+        (item: string) => item != action.payload._id
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getMe.fulfilled, (state, action) => {
@@ -28,6 +36,6 @@ export const getMe = createAsyncThunk("user/getMe", async (token: string) => {
   return response;
 });
 
-export const { setUser } = userReducer.actions;
+export const { setUser, likeProduct, dislikeProduct } = userReducer.actions;
 
 export default userReducer.reducer;

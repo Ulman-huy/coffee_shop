@@ -116,7 +116,7 @@ function Header() {
           {user && (
             <>
               <Link
-                to="/user/wishlist"
+                to="/wishlist"
                 className="hover:text-primary transition-colors relative text-[20px] flex w-[34px] h-[34px] self-center items-center text-white ml-4 cursor-pointer"
                 title="Sản phẩm yêu thích"
               >
