@@ -1,5 +1,5 @@
 import { PageContainer, ProLayout } from "@ant-design/pro-components";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs";
 import { Breadcrumb, ConfigProvider, Typography } from "antd";
@@ -8,6 +8,7 @@ import FooterAdmin from "../components/FooterAdmin";
 import HeaderAdmin from "../components/HeaderAdmin";
 import defaultProps from "../../pages/admin/_defaultProps";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { useSelector } from "react-redux";
 
 function AdminLayout() {
   const { t } = useTranslation();
@@ -15,6 +16,8 @@ function AdminLayout() {
   const [pathname, setPathname] = useState<string>("");
   const { width } = useWindowDimensions();
   const [path, setPath] = useState<{ title: string }[]>([]);
+  const user = useSelector((state: any) => state.user.data);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -30,8 +33,17 @@ function AdminLayout() {
       return pathNameArray;
     });
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (user?.role != "ADMIN") {
+      navigate("/");
+    }
+  }, []);
+
   return (
-    <ConfigProvider theme={{ token: { fontSize: 15, colorPrimary: "#f88630" } }}>
+    <ConfigProvider
+      theme={{ token: { fontSize: 15, colorPrimary: "#f88630" } }}
+    >
       <ProLayout
         prefixCls="my-prefix"
         locale="en-US"

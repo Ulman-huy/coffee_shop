@@ -34,6 +34,8 @@ import vi_VN from "antd/locale/vi_VN";
 import Package from "./pages/Package";
 import PackageDetail from "./pages/Package/PackageDetail";
 import Wishlist from "./pages/Wishlist";
+import PackageManager from "./pages/admin/PackageManager";
+import CustomerManager from "./pages/admin/CustomerManager";
 
 export const routers: any = [
   {
@@ -116,6 +118,14 @@ export const routers: any = [
       {
         path: "/admin/products/create",
         element: <CreateProduct />,
+      },
+      {
+        path: "/admin/package",
+        element: <PackageManager />,
+      },
+      {
+        path: "/admin/customer",
+        element: <CustomerManager />,
       },
     ],
   },

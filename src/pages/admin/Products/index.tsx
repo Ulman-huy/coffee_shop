@@ -46,7 +46,7 @@ function Products() {
   const [form] = Form.useForm();
   const [tableData, setTableData] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
-  const [_totalPage, setTotalPage] = useState<number>();
+  const [totalPage, setTotalPage] = useState<number>();
   const [modalImage, setModalImage] = useState<boolean>(false);
   const [images, setImages] = useState<string>("");
   const [edit, setEdit] = useState<DataType | undefined>(undefined);
@@ -290,7 +290,16 @@ function Products() {
           </Row>
         </Form>
       </Row>
-      <Table columns={columns} dataSource={tableData} loading={loading} />
+      <Table
+        columns={columns}
+        pagination={{
+          current: 1,
+          pageSize: 10,
+          total: totalPage
+        }}
+        dataSource={tableData}
+        loading={loading}
+      />
     </Col>
   );
 

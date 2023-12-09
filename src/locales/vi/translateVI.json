@@ -5,7 +5,9 @@
     "children": "Ví dụ Item",
     "products": "Tất cả Sản phẩm",
     "products all": "Tất cả sản phẩm",
-    "create product": "Thêm mới sản phẩm"
+    "create product": "Thêm mới sản phẩm",
+    "package": "Đơn hàng",
+    "customer": "Khách hàng"
   },
   "common": {
     "home": "Trang chủ",
@@ -14,6 +16,8 @@
     "account": "Tài khoản",
     "notify": "Thông báo"
   },
+  "customer": "Khách hàng",
+  "package": "Đơn hàng",
   "stop": "Dừng bán",
   "coffee": "Cà phê",
   "tea": "Trà",

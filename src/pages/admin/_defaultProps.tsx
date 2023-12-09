@@ -3,6 +3,8 @@ import {
   AppstoreAddOutlined,
   UnorderedListOutlined,
   PlusOutlined,
+  CodeSandboxOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 export default {
@@ -13,6 +15,11 @@ export default {
         path: "/admin",
         name: "Dashboard",
         icon: <HomeOutlined />,
+      },
+      {
+        path: "/admin/customer",
+        name: "Customer",
+        icon: <UserOutlined />,
       },
       {
         path: "/admin/prd",
@@ -30,6 +37,11 @@ export default {
             icon: <PlusOutlined />,
           },
         ],
+      },
+      {
+        path: "/admin/package",
+        name: "Package",
+        icon: <CodeSandboxOutlined />,
       },
     ],
   },

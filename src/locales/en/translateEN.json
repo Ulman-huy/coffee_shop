@@ -6,7 +6,9 @@
     "products": "Product",
     "products all": "All Prodcuts",
     "create product": "Create Product",
-    "create": "Create Product"
+    "create": "Create Product",
+    "package": "Package",
+    "customer": "Customer"
   },
   "common": {
     "home": "Home",
@@ -15,6 +17,8 @@
     "account": "Account",
     "notify": "Notifications"
   },
+  "customer": "Customer",
+  "package": "Package",
   "stop": "Stop sell",
   "coffee": "Coffee",
   "tea": "Tea",
